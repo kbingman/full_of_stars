@@ -31,17 +31,7 @@ var System = resourceful.define('system', function () {
   // Hooks
   this.before('create', function(instance, callback) {
     
-    // Move to sector model
-    var start_x = 0; // options['start_x'] ? options['start_x'] : 
-    var start_y = 0; // options['start_y'] ? options['start_y'] : 
-    var start_z = 0; // options['start_z'] ? options['start_z'] :
-    var width  = 2048; // options['width'] ? options['width'] : 
-    var height = 2048; // options['height'] ? options['height']
-    var depth  = 1024; // options['depth'] ? options['depth'] : 
-    
-    instance.x = parseInt(Math.random() * width) + start_x;
-    instance.y = parseInt(Math.random() * height) + start_y;
-    instance.z = parseInt(Math.random() * depth) + start_z;
+
     
     
     instance.name = instance.x + ':' + instance.y + ':' + instance.z;
