@@ -7,11 +7,10 @@ var resourceful = require('resourceful-mongo'),
 var System = resourceful.define('system', function () {
   
   this.use('mongodb', {
-    database: 'planetary', //required - databasename which contains collections
-    collection: 'systems', // required - the collection to use for this resource
-    safe : true // optional - run the driver in safe mode to ensure that the update succeeded. Defaults to false
+    uri: 'mongodb://localhost/planetary', // required - the mongo URI of the database
+    collection: 'systems', // required - the name of the collection
+    safe: true // optional - run the driver in safe mode to ensure that the update succeeded. Defaults to false
   });
-
   
   var self = this;
     

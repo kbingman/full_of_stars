@@ -1,12 +1,20 @@
 {
   "name": "stars",
+  "subdomain": "universe",
   "description": "An awesome real time application",
   "version": "0.0.1",
-  "author": "Me <me@mydomain.com>",
+  "author": "Keith Bingman <keith@keithbingman.com>",
   "private": true,
+  "scripts.start":"app.js",
   "engines": { "node": ">= 0.6.0" },
   "dependencies": {
-    "ss-stylus": "0.1.x",
-    "ss-hogan": "0.1.x"
+    "socketstream":"git://github.com/socketstream/socketstream.git",
+    "async": "*",
+    "director": "*",
+    "mongodb": "*",
+    "resourceful": "*",
+    "resourceful-mongo": "git://github.com/codebrew/resourceful-mongo.git",
+    "ss-hogan": "0.1.x",
+    "sugar":"*"
   }
 }

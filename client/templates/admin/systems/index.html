@@ -10,12 +10,12 @@
     <tbody>
     {{# systems }}
       <tr id="system_{{ _id }}">
-        <td class='name'><a href="/systems/{{ _id }}">{{ name }}</a></td>
+        <td class='name'><a href="#/systems/{{ _id }}">{{ name }}</a></td>
         <td class='star'>{{# stars }}{{ code }}{{ luminosity }}{{/ stars }}</td>
         <td class='planets'>
           {{# planets }}
-          <a href="/systems/{{ system_id }}/planets/{{ _id }}">
-          <span class="badge {{ klass_slug }}" data-id="{{ _id }}">{{ klass }}</span>
+          <a href="#/systems/{{ system_id }}/planets/{{ _id }}">
+            <span class="badge {{ klass_slug }}" data-id="{{ _id }}">{{ klass }}</span>
           </a>
           {{/ planets }}
         </td>

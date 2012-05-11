@@ -11,15 +11,13 @@ ss.server.on('reconnect', function(){
 
 Sector = {};
 
-console.log('map')
-
 ss.server.on('ready', function(){
   
   // Wait for the DOM to finish loading
   jQuery(function(){
-    require('/app');
     
-    ss.rpc('demo.getSystems');
+    require('/map');
+    ss.rpc('systems.getSystems');
 
   });
 

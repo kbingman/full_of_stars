@@ -1,4 +1,4 @@
-var resourceful = require('../../config/init.js').resourceful,
+var resourceful = require('resourceful'),
     sugar = require('sugar'),
     Ship = require('./ship').Ship;
     System = require('./system').System;
