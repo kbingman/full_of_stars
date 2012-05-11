@@ -20,6 +20,7 @@ ss.server.on('ready', function(){
   jQuery(function(){
     
     require('/router');
+    require('/sectors');
     require('/systems');
     require('/players');
 

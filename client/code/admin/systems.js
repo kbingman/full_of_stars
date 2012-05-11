@@ -6,15 +6,7 @@ ss.event.on('systems', function(systems) {
   // window.router.dispatch('on', document.location.hash.replace('#',''));
 });
 
-// Events
-$('form#new-systems-form').on('submit', function(e){
-  e.preventDefault();
-  var number = $(this).find('#systems-number').val();
-  
-  ss.rpc('systems.createSystems', number, function(success){
-    
-  });
-});
+
 
 // Demonstrates sharing code between modules by exporting function
 exports.showSystem = function (systemId) { 

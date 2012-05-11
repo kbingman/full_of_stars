@@ -1,0 +1,20 @@
+<section id="sectors">
+  <table class="table tableordered table-striped">
+    <thead>
+      <tr>
+        <th class='name'>ID</th>
+        <th class='coordinates'>Coordinates</th>
+        <th class='systems'>Systems</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{# sectors }}
+      <tr id="sector_{{ _id }}">
+        <td class='name'><a class="sector" href="#/sectors/{{ _id }}">{{ _id }}</a></td>
+        <td class='coordinates'>{{ x }}:{{ y }}</td>
+        <td class='systems'>{{ size }}</td>
+      </tr>
+    {{/ sectors }}
+    </tbody>
+  </table>
+</section>

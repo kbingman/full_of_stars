@@ -17,7 +17,7 @@ ss.server.on('ready', function(){
   jQuery(function(){
     
     require('/map');
-    ss.rpc('systems.getSystems');
+    ss.rpc('systems.getAllSystems');
 
   });
 

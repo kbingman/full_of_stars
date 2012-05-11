@@ -1,7 +1,12 @@
 var systems = require('/systems');
 var players = require('/players');
+var sectors = require('/sectors');
 
 var routes = {
+  '/sectors': {
+    on: function(){ ss.rpc('sectors.getSectors'); },
+    '/:id': sectors.showSector
+  },
   '/systems': {
     on: function(){ ss.rpc('systems.getSystems'); },
     '/:systemId': {

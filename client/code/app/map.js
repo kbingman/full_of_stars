@@ -3,7 +3,7 @@
 // Delete this file once you've seen how the demo works
 
 // Listen out for newMessage events coming from the server
-ss.event.on('systems', function(systems) {
+ss.event.on('allSystems', function(systems) {
   console.log(systems.length)
   Sector.systems = systems;
   

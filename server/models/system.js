@@ -7,9 +7,9 @@ var resourceful = require('resourceful-mongo'),
 var System = resourceful.define('system', function () {
   
   this.use('mongodb', {
-    uri: 'mongodb://localhost/planetary', // required - the mongo URI of the database
-    collection: 'systems', // required - the name of the collection
-    safe: true // optional - run the driver in safe mode to ensure that the update succeeded. Defaults to false
+    uri: 'mongodb://localhost/planetary', 
+    collection: 'systems', 
+    safe: true
   });
   
   var self = this;
@@ -23,16 +23,13 @@ var System = resourceful.define('system', function () {
   this.property('mass', Number); 
   this.property('planets', Array); 
   this.property('stars', Array); 
-  this.property('nearby_stars', Array); 
+  this.property('sectorId', String); 
   this.property('clustered', Boolean);
   
   self.timestamps();
   
   // Hooks
   this.before('create', function(instance, callback) {
-    
-
-    
     
     instance.name = instance.x + ':' + instance.y + ':' + instance.z;
     instance.orbits = {};
@@ -144,17 +141,19 @@ var System = resourceful.define('system', function () {
     var star = instance.stars[0];
     var mass = instance.mass;
     var attraction_radius = mass * 72; 
+    console.log(attraction_radius)
     
     var x1 = instance.x - attraction_radius;
     var x2 = instance.x + attraction_radius;
     var y1 = instance.y - attraction_radius;
     var y2 = instance.y + attraction_radius;
-    var conditions = { $and: [{'x':{ $gte: x1 }},  {'x':{ $lte: x2 }}, {'y':{ $gte: y1 }},  {'y':{ $lte: y2 }}, {'mass': { $lt: mass }}] };
+    var conditions = { $and: [{'x':{ $gte: x1 }},  {'x':{ $lte: x2 }}, {'y':{ $gte: y1 }},  {'y':{ $lte: y2 }}] };
+    // var conditions = { $and: [{'x':{ $gte: x1 }},  {'x':{ $lte: x2 }}, {'y':{ $gte: y1 }},  {'y':{ $lte: y2 }}, {'mass': { $lt: mass }}] };
     // Needs to find nearby systems
-    // console.log('fuck')
+    
     self.find(conditions, function(err, systems){ 
       if(err) callback.call(this, err, instance);
-      // console.log('you')
+      console.log(systems.length)
       var clusterer = function(system, done){
         var delta_x = instance.x - system.x;
         var delta_y = instance.y - system.y;
@@ -170,6 +169,9 @@ var System = resourceful.define('system', function () {
         var m = length - n;
         var x = ((m * instance.x) + (n * system.x))/(m + n);
         var y = ((m * instance.y) + (n * system.y))/(m + n);
+        
+        console.log('old x: ' + instance.x)
+        console.log('mew x: ' + Math.round(x))
           
         instance.x = Math.round(x);
         instance.y = Math.round(y);

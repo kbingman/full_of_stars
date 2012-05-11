@@ -11,46 +11,52 @@ exports.actions = function(req, res, ss) {
   //req.use('example.authenticated')
 
   return {
-
-    getSystems: function() {
-      sendSystems(req, res, ss);
-    }, 
     
-    createSystems: function(quantity){
-      var count = 0,
-          systems = [];
-          
-      async.whilst(
-        function () { return count < quantity; },
-        function (callback) {
-          count++;
-          System.create({}, function(error, system){ 
-            if(error){ callback(error) };
-            callback(null, system);
-          });
-        },
-        function (error) {
-          if(error){
-            return res(false);
-          } else {
-            sendSystems(req, res, ss);
-          }
+    getSystems: function() {
+      System.all(function(error, systems){
+        if(error){
+          return res(false)
         }
-      );
+        ss.publish.all('systems', systems);
+        return res(true)
+      });
+    },
+
+    getAllSystems: function() {
+      System.all(function(error, systems){
+        if(error){
+          return res(false)
+        }
+        ss.publish.all('allSystems', systems);
+        return res(true)
+      });
     }
+    // createSystems: function(quantity){
+    //   var count = 0,
+    //       systems = [];
+    //       
+    //   async.whilst(
+    //     function () { return count < quantity; },
+    //     function (callback) {
+    //       count++;
+    //       System.create({}, function(error, system){ 
+    //         if(error){ callback(error) };
+    //         systems.push(system);
+    //         callback(null, system);
+    //       });
+    //     },
+    //     function (error) {
+    //       if(error){
+    //         return res(false);
+    //       } else {
+    //         ss.publish.all('systems', systems);
+    //         return res(true)
+    //       }
+    //     }
+    //   );
+    // }
 
   };
 
 };
 
-// Private
-
-var sendSystems = function(req, res, ss){
-  System.all(function(error, systems){
-    if(error){
-      return res(false)
-    }
-    ss.publish.all('systems', systems);
-    return res(true)
-  });
-}
