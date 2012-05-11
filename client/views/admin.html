@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <SocketStream>
+    <meta charset="utf-8"/>
+    <title>It's Full of Stars: Admin</title>
+    <!-- Web App, hides Safari Chrome -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <!--  Home page icon -->
+    <!--  link rel="apple-touch-icon-precomposed" href="/assets/icon.png"  -->
+  </head>
+  <body class="admin">   
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">It's Full of Stars!</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <header class="jumbotron subhead">
+        <h1>It's Full of Stars!</h1>
+        <p>This is an example of an admin interface...</p>
+      </header>
+
+      <div class="row">
+        <div class="span9">
+          <h3>Create New Systems</h3>
+      
+          <form id="new-systems-form" class="create form-inline">
+      
+            <label for="systems_number">Number</label>
+            <input type="text" name="number" value="" id="systems-number" />
+            <button type="submit" class="btn btn-inverse">Create</button>
+      
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container" id="content">
+      
+    </div>
+    <div id="modal"></div>
+  </body>
+</html>
+
+  
+
+
