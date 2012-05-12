@@ -7,20 +7,26 @@ var Player = resourceful.define('player', function () {
 
   var self = this;
   
-  self.property('name', String);
-  self.property('slug', String);
-  self.property('homeworld_id', String);
-  self.property('systems', Array);
-  self.property('ships', Array);
-  self.property('bank_account', Number);
+  this.use('mongodb', {
+    uri: resourceful.db, 
+    collection: 'players', 
+    safe: true
+  });
+  
+  this.property('name', String);
+  this.property('slug', String);
+  this.property('homeworld_id', String);
+  this.property('systems', Array);
+  this.property('ships', Array);
+  this.property('bank_account', Number);
   // self.property('resources', Object);
   
-  self.property('rareEarthMetals', Number)
-  self.property('minerals', Number)
-  self.property('fuel', Number)
+  this.property('rareEarthMetals', Number)
+  this.property('minerals', Number)
+  this.property('fuel', Number)
   
   // Before Create 
-  self.before('create', function(player, callback) {
+  this.before('create', function(player, callback) {
     player.bank_account = 1000000000;
     player.ships = [];
     player.slug = player.name.toLowerCase().replace(/ /g, '-');
@@ -38,39 +44,39 @@ var Player = resourceful.define('player', function () {
   });
   
   // Builds 
-  self.prototype.build_ship = function(callback){
-    var player = this;
-    
-    System.get(player.homeworld_id, function(err, homeworld){
-      
-      console.log(homeworld.x)
-      var ship = new Ship({ 
-        player_id: player.id,
-        x: homeworld.x,
-        y: homeworld.y
-      });
-      ship.save(function(err, ship){
-        if(err){
-          console.log(err);
-          callback(err, player);
-          return;
-        }
-        player.ships.push(ship.toJSON());
-        callback(null, player);
-      });
-    });
-  }
-  
-  self.prototype.homeworld = function(callback){
-    var id = this.homeworld_id; 
-    System.get(id, function(err, homeworld){
-      if(err){
-        callback(err);
-        return;
-      }
-      callback(null, homeworld);
-    });
-  };
+  // self.prototype.build_ship = function(callback){
+  //   var player = this;
+  //   
+  //   System.get(player.homeworld_id, function(err, homeworld){
+  //     
+  //     console.log(homeworld.x)
+  //     var ship = new Ship({ 
+  //       player_id: player.id,
+  //       x: homeworld.x,
+  //       y: homeworld.y
+  //     });
+  //     ship.save(function(err, ship){
+  //       if(err){
+  //         console.log(err);
+  //         callback(err, player);
+  //         return;
+  //       }
+  //       player.ships.push(ship.toJSON());
+  //       callback(null, player);
+  //     });
+  //   });
+  // }
+  // 
+  // self.prototype.homeworld = function(callback){
+  //   var id = this.homeworld_id; 
+  //   System.get(id, function(err, homeworld){
+  //     if(err){
+  //       callback(err);
+  //       return;
+  //     }
+  //     callback(null, homeworld);
+  //   });
+  // };
    
 });
 

@@ -1,23 +1,30 @@
-var systems = require('/systems');
 var players = require('/players');
 var sectors = require('/sectors');
+var systems = require('/systems');
+var planets = require('/planets');
+var ships = require('/ships');
 
 var routes = {
   '/sectors': {
-    on: function(){ ss.rpc('sectors.getSectors'); },
-    '/:id': sectors.showSector
+    on: function(){ ss.rpc('sectors.all'); },
+    '/:id': function(id){ ss.rpc('sectors.show', id); },
   },
   '/systems': {
-    on: function(){ ss.rpc('systems.getSystems'); },
     '/:systemId': {
-      on: systems.showSystem,
+      on: systems.show,
       '/planets/:id': {
-        on: systems.showPlanet
+        on: planets.show
       }
     }
   },
+  '/ships': {
+    on: function(){ ss.rpc('ships.all', ships.index); },
+    '/new': ships.new,
+    '/:id': function(id){ ss.rpc('ships.show', id, ships.edit); },
+    '/:id/edit': ships.edit
+  },
   '/players': {
-    on: players.showPlayers,
+    on: function(){ ss.rpc('players.all'); },
     '/:id': {
       on: players.showPlayer
     }

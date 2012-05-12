@@ -1,80 +1,75 @@
 var systems = require('/systems');
+var utilities = require('/utilities');
 
 // Main systems index view
 ss.event.on('sectors', function(sectors) {
   Admin.sectors = sectors;
-
-  return exports.showSectors(sectors);
-  // window.router.dispatch('on', document.location.hash.replace('#',''));
+  return exports.index(Admin.sectors);
 });
 
 // Create Sector
 ss.event.on('sector', function(sector) {
-  alert('hey')
   Admin.sectors.push(sector);
-  return exports.showSectors(sectors);
+  return exports.index(Admin.sectors);
 });
 
 // Show Sector
-
 ss.event.on('showSector', function(data) {
   Admin.sector = data.sector;
   Admin.systems = data.systems;
+
+  return exports.show(data.sector, data.systems)
+});
+
+exports.show = function(sector, systems){
+  var systems = systems.map(function(system){
+    system.slug = system.stars[0].klass.toLowerCase();
+    system.planets = system.planets.map(function(planet){
+      planet.system_id = system._id;
+      return planet;
+    });
+    return system;
+  });
   
   var html = ss.tmpl['admin-sectors-show'].render({
-    sector: data.sector,
-    systems: data.systems
+    sector: sector,
+    systems: systems.sortBy(function(s) {
+      return -s.ctime; 
+    })
   });
   
-  console.log(data)
-
-  return $('#content').html(html);
-});
-
-
-// Events
-$('form#new-sector-form').on('submit', function(e){
-  e.preventDefault();
-
-  // TODO build a general function for this
-  var jqueryParams = $(this).serializeArray();
-  var params = {};
-  jqueryParams.map(function(p){
-    params[p.name] = p.value;
-  });
-  
-  ss.rpc('sectors.createSector', params, function(success){
-    console.log(success)
-  });
-});
-
-
-exports.showSectors = function(){
-  var sectors = Admin.sectors.map(function(sector){
-    sector.size = sector.systemIds.length;
-    return sector;
-  });
-
-  var html = ss.tmpl['admin-sectors-index'].render({
-    sectors: sectors
-  });
-
   $('#content').html(html);
-  
-  // Events
-  // TODO build a general function for this
-  $('#sectors a.sector').on('click', function(e){
+
+  $('#systems a').on('click', function(e){
     e.preventDefault();
     window.router.dispatch('on', $(e.currentTarget).attr('href').replace('#',''));
   });
 }
 
-exports.showSector = function(id){
-  
-  ss.rpc('sectors.showSector', id, function(success){
-    console.log(success)
+exports.index = function(sectors){
+  var sectors = sectors.map(function(sector){
+    sector.size = sector.systemIds.length;
+    return sector;
   });
+  var partials = { 
+    'admin-sectors-new': ss.tmpl['admin-sectors-new'] 
+  };
+  var html = ss.tmpl['admin-sectors-index'].render({
+    sectors: sectors
+  }, partials);
+
+  $('#content').html(html);
   
+  // Events
+  $('form#new-sector-form').on('submit', function(e){
+    e.preventDefault();
+
+    var params = utilities.jsonifyParams($(this).serializeArray());
+  
+    ss.rpc('sectors.create', params, function(success){
+      console.log(success)
+    });
+  });
 }
 
 

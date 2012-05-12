@@ -7,7 +7,7 @@ var resourceful = require('resourceful-mongo'),
 var System = resourceful.define('system', function () {
   
   this.use('mongodb', {
-    uri: 'mongodb://localhost/planetary', 
+    uri: resourceful.db, 
     collection: 'systems', 
     safe: true
   });

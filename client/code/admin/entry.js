@@ -11,7 +11,8 @@ ss.server.on('reconnect', function(){
 
 Admin = {
   systems: [],
-  players: []
+  players: [],
+  ships: []
 };
 
 ss.server.on('ready', function(){
@@ -20,8 +21,9 @@ ss.server.on('ready', function(){
   jQuery(function(){
     
     require('/router');
+    require('/utilities');
+    require('/ships');
     require('/sectors');
-    require('/systems');
     require('/players');
 
   });

@@ -50,7 +50,7 @@ var server = http.Server(ss.http.middleware);
 server.listen(3000);
 
 if (ss.env == 'production'){
-  var db = 'mongodb://nodejitsu:b2119d911bcf7125feaff69087586c0b@flame.mongohq.com:27052/nodejitsudb15282512330';
+  resourceful.db = 'mongodb://nodejitsu:b2119d911bcf7125feaff69087586c0b@flame.mongohq.com:27052/nodejitsudb15282512330';
   ss.session.store.use('redis', {
     uri: 'redis://nodejitsu:351ce528621de5837d0f6c7828789ad2@panga.redistogo.com:9538/'
   });
@@ -58,12 +58,12 @@ if (ss.env == 'production'){
     uri: 'redis://nodejitsu:351ce528621de5837d0f6c7828789ad2@panga.redistogo.com:9538/'
   });
 } else {
-  var db = 'mongodb://localhost/planetary'
+  resourceful.db = 'mongodb://localhost/planetary'
 }
 
 // Open the mongodb connection
 resourceful.use('mongodb', {
-  uri: db, // required - the connection to be opened
+  uri: resourceful.db, // required - the connection to be opened
   onConnect: function (err) { // required - the callback upon opening the database connection
     // Start SocketStream
     if(!err){

@@ -1,0 +1,25 @@
+<h1>ships</h1>
+<h4><a href="#/ships/new">new ship</a></h4>
+
+<section id="ships">
+  <table class="table tableordered table-striped">
+    <thead>
+      <tr>
+        <th class='name'>Name</th>
+        <th class='type'>Type</th>
+        <th class='type'>Drive</th>
+        <th class='weapons'>Weapons</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{# ships }}
+      <tr id="sector_{{ _id }}">
+        <td class='name'><a href="#/ships/{{ _id }}">{{ name }}</a></td>
+        <td class='type'>{{ type }}</td>
+        <td class='drive'>{{ drive }}</td>
+        <td class='weapons'>{{ weapons }}</td>
+      </tr>
+    {{/ ships }}
+    </tbody>
+  </table>
+</section>

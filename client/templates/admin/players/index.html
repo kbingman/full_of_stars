@@ -1,0 +1,18 @@
+<section id="players">
+  <table class="table tableordered table-striped">
+    <thead>
+      <tr>
+        <th class='name'>Name</th>
+        <th class='sector'>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{# players }}
+      <tr id="system_{{ _id }}">
+        <td class='name'><a href="#/players/{{ _id }}">{{ name }}</a></td>
+        <td class='sector'>{{ email }}</td>
+      </tr>
+    {{/ players }}
+    </tbody>
+  </table>
+</section>

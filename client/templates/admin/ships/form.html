@@ -1,0 +1,46 @@
+<fieldset>
+  <div class="control-group">
+    <label class="control-label" for="ship-name">Name</label>
+    <div class="controls">
+      <input type="text" class="input" name="name" id="ship-name" value="{{ name }}">
+      <span class="help-inline">The Class Name</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label" for="ship-type">Type</label>
+    <div class="controls">
+      <select class="select" name="type" id="ship-type">
+        {{# typesList }}
+        <option {{ selected }}>{{ name }}</option>
+        {{/ typesList }}
+      </select>
+      <span class="help-inline">The basic use of you ship, i.e. War, Exploration, Transport</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label" for="ship-type">Drive</label>
+    <div class="controls">
+      <select class="select" name="drive" id="ship-drive">
+        {{# drivesList }}
+        <option {{ selected }}>{{ name }}</option>
+        {{/ drivesList }}
+      </select>
+      <span class="help-inline">Speed and Drive types. More types are available with better science</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label" for="ship-weapons">Weapons</label>
+    <div class="controls">
+      <select class="select" name="weapons" id="ship-weapons">
+        {{# weaponsList }}
+        <option {{ selected }}>{{ name }}</option>
+        {{/ weaponsList }}
+      </select>
+      <span class="help-inline">More types are available with better science. Invest wisely</span>
+    </div>
+  </div>
+  
+</fieldset>

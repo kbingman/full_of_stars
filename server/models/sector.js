@@ -8,7 +8,7 @@ var Sector = resourceful.define('sector', function () {
   var self = this;
   
   this.use('mongodb', {
-    uri: 'mongodb://localhost/planetary', 
+    uri: resourceful.db, 
     collection: 'sectors', 
     safe: true
   });
@@ -21,6 +21,7 @@ var Sector = resourceful.define('sector', function () {
   this.property('height', Number);
   this.property('depth', Number);
   this.property('systemIds', Array);
+  this.property('systemCount', Number);
   
   // Before Create 
   this.before('create', function(sector, callback) {
@@ -40,7 +41,8 @@ var Sector = resourceful.define('sector', function () {
 });
 
 Sector.prototype.createSystems = function(callback){
-  var sector = this;   
+  var sector = this; 
+  var id = sector._id  
   // Builds the specified number of systems
   var count = 0,
       quantity = Math.ceil(Math.random() * 42)
@@ -50,7 +52,7 @@ Sector.prototype.createSystems = function(callback){
     count++;
       
     var systemAttr = {
-      sectorId: sector._id.toString(),
+      sectorId: id,
       x: parseInt(Math.random() * sector.width) + sector.x,
       y: parseInt(Math.random() * sector.height) + sector.y,
       z: parseInt(Math.random() * sector.depth) + sector.z
@@ -61,13 +63,9 @@ Sector.prototype.createSystems = function(callback){
         callback(error);
         return;
       };
-      sector.systemIds.push(system.id);
+      // sector.systemIds.push(system.id);
       systems.push(system);
       callback(null, system); 
-      // Async...
-      // sector.save(function(){
-      //   callback(null, system); 
-      // });
     });
   };
   
@@ -79,7 +77,12 @@ Sector.prototype.createSystems = function(callback){
         console.log(error);
         callback(error);
       } else {
-        callback(null, systems);
+        sector.systemCount = systems.length;
+        sector.save(function(err, sector){
+          // Id gets lost for some bizarre reason
+          sector._id = id;
+          callback(null, sector);
+        });
       }
     }
   );
