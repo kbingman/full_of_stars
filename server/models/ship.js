@@ -23,10 +23,20 @@ var Ship = resourceful.define('ship', function () {
   this.property('speed', Number);
   this.property('scienceLevel', Number);
   
+  this.property('size', Number);
   this.property('armor', Array);
-  this.property('weapons', String);
+  this.property('weapons', Array);
   this.property('drive', String);
   this.property('fuel', String);
+  
+  // Before Create 
+  this.before('create', function(ship, callback) {
+    // Defaults
+    ship.weapons = [];
+    ship.size = parseInt(ship.size);
+    callback();
+  });
+  
 
 });
 

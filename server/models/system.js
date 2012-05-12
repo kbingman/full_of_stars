@@ -100,39 +100,7 @@ var System = resourceful.define('system', function () {
     return planets;
   };
   
-  // self.prototype.toJSON = function(){
-  //   var system = this;
-  //   return {
-  //     '_id': system._id,
-  //     'name': system.name,
-  //     'klass': system.stars.first().klass,
-  //     'slug': system.stars.first().klass.parameterize(),
-  //     'radius': Math.round(system.stars.first().radius * 12),
-  //     'ctime': system.ctime,
-  //     'x': system.x,
-  //     'y': system.y,
-  //     'z': system.z,
-  //     'stars': system.stars,
-  //     'star_count': system.stars.length,
-  //     'planets': system.planets,
-  //     'planet_count': system.planets.length
-  //   }
-  // };
   
-  
-  // TODO Move this to a maintainable place
-  // ----------------------------------------------------------------
-  
-  // self.insert = function(documents, callback) {
-  //   var config = this.config;
-  // 
-  //   self._connection.collection(function(err, collection) {
-  //     collection.insert(documents, {safe: true}, callback);
-  //   });
-  // };
-  
-  
-
   // ----------------------------------------------------------------
   self.prototype.cluster = function(callback){
     

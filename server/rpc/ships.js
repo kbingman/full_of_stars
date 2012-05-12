@@ -18,7 +18,7 @@ exports.actions = function(req, res, ss) {
     
     create: function(params){
       Ship.create(params, function(error, ship){
-        if(error){ return res(false); }
+        if(error){ ss.log(error); return res(false); }
         
         ss.publish.all('ship', ship);
         return res(true);
@@ -35,9 +35,9 @@ exports.actions = function(req, res, ss) {
     },
     
     update: function(id, params){
-      console.log(params)
+      ss.log('➙'.cyan, 'params'.cyan, params)
       Ship.update(id, params, function(error, ship){
-        if(error){ return res(false); }
+        if(error){ console.log(error); return res(false); }
         
         ss.publish.all('ship', ship);
         return res(true);

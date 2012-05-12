@@ -1,18 +1,63 @@
 <div class="row">
   <div class="span9">
+    {{# ship }}
     <h3>Create Ship</h3>
 
-    <form id="edit-ship-form" class="create form-horizontal">
-      
-      {{# ship }}
-      {{> admin-ships-form }}
-      {{/ ship }}
-      
-      <div class="form-actions">
-        <button type="submit" class="btn btn-inverse">Save</button>
-        <a href="#/ships">Cancel</a>
-      </div>
-      
+    <form id="edit-ship-form" class="ship edit form-horizontal"> 
+    {{> admin-ships-form }}
     </form>
+    
+    <form id="weapons-list" class="list form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="ship-weapons">Weapons</label>
+          <div class="controls">
+            <select class="select short" name="weapons" id="ship-weapons">
+              {{# weaponsList }}
+              <option>{{ . }}</option>
+              {{/ weaponsList }}
+            </select>
+            <button type="submit" class="btn">Add</button>
+            <span class="help-inline">More types are available with better science. Invest wisely</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <ul class="weapons">
+            {{# weapons }}
+              <li><span>{{ . }}</span><a class="close remove">&times;</a></li>
+            {{/ weapons }}
+            </ul>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    
+    <form id="defenses-list" class="list form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="ship-weapons">Defenses</label>
+          <div class="controls">
+            <select class="select short" name="weapons" id="ship-weapons">
+              {{# weaponsList }}
+              <option>{{ . }}</option>
+              {{/ weaponsList }}
+            </select>
+            <button type="submit" class="btn">Add</button>
+            <span class="help-inline">More types are available with better science. Invest wisely</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <ul class="weapons">
+            {{# defenses }}
+              <li><span>{{ . }}</span><a class="close remove">&times;</a></li>
+            {{/ defenses }}
+            </ul>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    {{/ ship }}
   </div>
 </div>

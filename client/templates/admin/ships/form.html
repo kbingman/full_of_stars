@@ -2,15 +2,23 @@
   <div class="control-group">
     <label class="control-label" for="ship-name">Name</label>
     <div class="controls">
-      <input type="text" class="input" name="name" id="ship-name" value="{{ name }}">
+      <input type="text" class="input large" name="name" id="ship-name" value="{{ name }}">
       <span class="help-inline">The Class Name</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label" for="ship-size">Size</label>
+    <div class="controls">
+      <input type="text" class="input large" name="size" id="ship-size" value="{{ size }}">
+      <span class="help-inline">Price here?</span>
     </div>
   </div>
   
   <div class="control-group">
     <label class="control-label" for="ship-type">Type</label>
     <div class="controls">
-      <select class="select" name="type" id="ship-type">
+      <select class="select large" name="type" id="ship-type">
         {{# typesList }}
         <option {{ selected }}>{{ name }}</option>
         {{/ typesList }}
@@ -22,7 +30,7 @@
   <div class="control-group">
     <label class="control-label" for="ship-type">Drive</label>
     <div class="controls">
-      <select class="select" name="drive" id="ship-drive">
+      <select class="select large" name="drive" id="ship-drive">
         {{# drivesList }}
         <option {{ selected }}>{{ name }}</option>
         {{/ drivesList }}
@@ -32,15 +40,12 @@
   </div>
   
   <div class="control-group">
-    <label class="control-label" for="ship-weapons">Weapons</label>
+    <label class="control-label" for="ship-fuel">Fuel</label>
     <div class="controls">
-      <select class="select" name="weapons" id="ship-weapons">
-        {{# weaponsList }}
-        <option {{ selected }}>{{ name }}</option>
-        {{/ weaponsList }}
-      </select>
-      <span class="help-inline">More types are available with better science. Invest wisely</span>
+      <input type="text" class="input large" name="size" id="ship-fuel" value="{{ fuel }}">
+      <span class="help-inline">Percentage of Mass. We all need to gas up</span>
     </div>
   </div>
+  
   
 </fieldset>

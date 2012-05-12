@@ -39,7 +39,7 @@ ss.event.on('ships', function(ships) {
 ss.event.on('ship', function(ship) {
   Admin.ships = Admin.ships.remove(function(s){
     return s._id == ship._id;
-  })
+  });
   Admin.ships.push(ship);
   Admin.ship = ship;
 });
@@ -60,7 +60,7 @@ exports.new = function(){
   var html = ss.tmpl['admin-ships-new'].render({
     typesList: utilities.mustachizeSelect('type', typesList),
     drivesList: utilities.mustachizeSelect('drive', drivesList),
-    weaponsList: utilities.mustachizeSelect('weapons', weaponsList)
+    weaponsList: weaponsList
   }, partials);
   
   $('#content').html(html);
@@ -73,7 +73,7 @@ exports.new = function(){
 
     ss.rpc('ships.create', params, function(success){
       console.log(success);
-      window.router.dispatch('on', '/ships/' + Admin.ship._id);
+      window.router.setRoute('/ships/' + Admin.ship._id);
     });
   });
 }
@@ -92,12 +92,36 @@ exports.edit = function(success){
     ship: ship,
     typesList: utilities.mustachizeSelect('type', typesList, ship),
     drivesList: utilities.mustachizeSelect('drive', drivesList, ship),
-    weaponsList: utilities.mustachizeSelect('weapons', weaponsList, ship)
+    weaponsList: weaponsList
   }, partials);
   
   
   $('#content').html(html);
   
+  $('form.list button').on('click', function(e){
+    e.preventDefault();
+    var form = $(this).parents('form');
+    var value = form.find('select').val();
+    Admin.ship.weapons.push(value);
+    
+    ss.rpc('ships.update', Admin.ship._id, { weapons: Admin.ship.weapons }, function(success){
+      console.log(success);
+      window.router.dispatch('on', '/ships/' + Admin.ship._id);
+    });
+  });
+  
+  $('ul.weapons a.remove').on('click', function(){
+    var value = $(this).prev('span').text();
+    Admin.ship.weapons = Admin.ship.weapons .remove(function(w){
+      return w == value;
+    });
+    ss.rpc('ships.update', Admin.ship._id, { weapons: Admin.ship.weapons }, function(success){
+      console.log(success);
+      window.router.dispatch('on', '/ships/' + Admin.ship._id);
+    });
+  })
+  
+  // Events
   var form = $('form#edit-ship-form');
   
   form.on('keyup', function(e){
@@ -112,7 +136,12 @@ exports.edit = function(success){
     e.preventDefault();
     submitUpdate(ship._id, form);
   });
-
+  
+  form.find('select').on('change', function(e){
+    e.preventDefault();
+    submitUpdate(ship._id, form);
+  });
+  
 }
 
 var submitUpdate = function(id, form){

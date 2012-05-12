@@ -123,3 +123,19 @@ table {}
 }
 
 
+ul.weapons {
+  width: 270px;
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0;
+}
+
+ul.weapons li {
+  margin: 4px 0 4px;
+}
+
+select.select { width: 220px; }
+select.large { width: 270px; }
+input.large { width: 260px; }
+
+form .help-inline { color: hsl(240, 5%, 72%); }
