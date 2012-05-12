@@ -1,5 +1,4 @@
-var resourceful = require('resourceful'),
-    sugar = require('sugar');
+var resourceful = require('resourceful');
 
 var Planet = resourceful.define('planet', function () {
 

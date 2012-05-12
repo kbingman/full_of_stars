@@ -12,7 +12,8 @@ ss.server.on('reconnect', function(){
 Admin = {
   systems: [],
   players: [],
-  ships: []
+  ships: [],
+  ship: {}
 };
 
 ss.server.on('ready', function(){

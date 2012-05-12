@@ -1,5 +1,4 @@
 var resourceful = require('resourceful-mongo'),
-    sugar = require('sugar'),
     async = require('async'),
     System = require('./system').System;
 

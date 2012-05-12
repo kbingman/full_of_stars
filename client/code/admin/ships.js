@@ -34,6 +34,7 @@ var weaponsList = [
 
 ss.event.on('ships', function(ships) {
   Admin.ships = ships;
+  console.log(Admin.ships)
 });
 
 ss.event.on('ship', function(ship) {
@@ -45,7 +46,8 @@ ss.event.on('ship', function(ship) {
 });
 
 exports.index = function(){
-  ships = Admin.ships
+  
+  ships = Admin.ships;
   var html = ss.tmpl['admin-ships-index'].render({
     ships: ships
   });

@@ -1,5 +1,4 @@
-var resourceful = require('resourceful'),
-    sugar = require('sugar');
+var resourceful = require('resourceful');
     
 // embedded in Ship
 var Path = resourceful.define('path', function () {

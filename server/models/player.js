@@ -1,5 +1,4 @@
-var resourceful = require('resourceful'),
-    sugar = require('sugar'),
+var resourceful = require('resourceful'), 
     Ship = require('./ship').Ship;
     System = require('./system').System;
 
@@ -15,10 +14,10 @@ var Player = resourceful.define('player', function () {
   
   this.property('name', String);
   this.property('slug', String);
-  this.property('homeworld_id', String);
+  this.property('homeworldId', String);
   this.property('systems', Array);
   this.property('ships', Array);
-  this.property('bank_account', Number);
+  this.property('bankAccount', Number);
   // self.property('resources', Object);
   
   this.property('rareEarthMetals', Number)
@@ -27,7 +26,7 @@ var Player = resourceful.define('player', function () {
   
   // Before Create 
   this.before('create', function(player, callback) {
-    player.bank_account = 1000000000;
+    player.bankAccount = 1000000000;
     player.ships = [];
     player.slug = player.name.toLowerCase().replace(/ /g, '-');
     
@@ -39,34 +38,9 @@ var Player = resourceful.define('player', function () {
       player.homeworld_id = system ? system._id.toString() : null;
       // system.player_id = player._id;
       callback();
-      // self.build_ship(player, callback);
     });
   });
   
-  // Builds 
-  // self.prototype.build_ship = function(callback){
-  //   var player = this;
-  //   
-  //   System.get(player.homeworld_id, function(err, homeworld){
-  //     
-  //     console.log(homeworld.x)
-  //     var ship = new Ship({ 
-  //       player_id: player.id,
-  //       x: homeworld.x,
-  //       y: homeworld.y
-  //     });
-  //     ship.save(function(err, ship){
-  //       if(err){
-  //         console.log(err);
-  //         callback(err, player);
-  //         return;
-  //       }
-  //       player.ships.push(ship.toJSON());
-  //       callback(null, player);
-  //     });
-  //   });
-  // }
-  // 
   // self.prototype.homeworld = function(callback){
   //   var id = this.homeworld_id; 
   //   System.get(id, function(err, homeworld){

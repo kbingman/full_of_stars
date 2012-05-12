@@ -39,9 +39,9 @@
           <label class="control-label" for="ship-weapons">Defenses</label>
           <div class="controls">
             <select class="select short" name="weapons" id="ship-weapons">
-              {{# weaponsList }}
+              {{# defensesList }}
               <option>{{ . }}</option>
-              {{/ weaponsList }}
+              {{/ defensesList }}
             </select>
             <button type="submit" class="btn">Add</button>
             <span class="help-inline">More types are available with better science. Invest wisely</span>
@@ -58,6 +58,9 @@
         </div>
       </fieldset>
     </form>
+    <h3>
+      {{ name }} : {{ drive }} : {{ type }} : {{ drive }} : {{ fuel }}% Fuel : {{# weapons }}{{ . }}{{/ weapons }}
+    </h3>
     {{/ ship }}
   </div>
 </div>

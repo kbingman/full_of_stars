@@ -116,17 +116,15 @@ table {}
   font-weight: bold;
 }
 
-
 .orbits { 
   height: 0;
   padding: 72px 0;
 }
 
-
 ul.weapons {
-  width: 270px;
+  width: 265px;
   list-style: none;
-  padding-left: 0;
+  padding-left: 5px;
   margin: 0 0;
 }
 
@@ -138,4 +136,4 @@ select.select { width: 220px; }
 select.large { width: 270px; }
 input.large { width: 260px; }
 
-form .help-inline { color: hsl(240, 5%, 72%); }
+form .help-inline { color: hsl(240, 5%, 72% ); }
