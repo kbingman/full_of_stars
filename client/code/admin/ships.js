@@ -17,14 +17,14 @@ var typesList = [
 var drivesList = [
   'Sublight In-System',
   'Sublight (40% C)',
-  'High Accelleration Sublight (80% C)',
-  'High Accelleration Sublight (99% C)',
+  'High Acceleration Sublight (80% C)',
+  'High Acceleration Sublight (99% C)',
   'Jump'
 ];
   
 var weaponsList = [
-  'Ship to Ship Missles',
-  'Planetary Bombardment Missles',
+  'Ship to Ship Missiles',
+  'Planetary Bombardment Missiles',
   'Rail Guns',
   'Lasers (really?)',
   'Plasma Cannons',
