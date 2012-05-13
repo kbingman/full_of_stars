@@ -1,7 +1,8 @@
 var resourceful = require('resourceful-mongo'),
     Star = require('./star').Star,
     Planet = require('./planet').Planet,
-    async = require('async');
+    async = require('async'),
+    sugar = require('sugar');
     
 var System = resourceful.define('system', function () {
   

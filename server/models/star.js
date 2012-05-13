@@ -42,7 +42,7 @@ var Star = resourceful.define('star', function () {
     var frequency = 0;
     var probability = Math.random();
 
-    self.types.each(function(klass){
+    self.types.forEach(function(klass){
       var start = frequency;
       frequency = frequency + klass.frequency;
 

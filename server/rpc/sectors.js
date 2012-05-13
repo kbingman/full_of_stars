@@ -10,7 +10,7 @@ exports.actions = function(req, res, ss) {
 
     all: function() {
       Sector.all(function(error, sectors){
-        if(error){ return res(false); }
+        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
         ss.publish.all('sectors', sectors);
         return res(true);
       });

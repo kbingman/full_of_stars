@@ -18,9 +18,9 @@ var routes = {
     }
   },
   '/ships': {
-    on: function(){ ss.rpc('ships.all', ships.index); },
+    on: function(){ ss.rpc('ships.all'); },
     '/new': ships.new,
-    '/:id': function(id){ ss.rpc('ships.show', id, ships.edit); },
+    '/:id': function(id){ ss.rpc('ships.show', id); },
     '/:id/edit': ships.edit
   },
   '/players': {

@@ -11,7 +11,7 @@ exports.actions = function(req, res, ss) {
 
     all: function() {
       Player.all(function(error, players){
-        if(error){ return res(false) }
+        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
         
         ss.publish.all('players', players);
         return res(true)

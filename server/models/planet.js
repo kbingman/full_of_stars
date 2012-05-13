@@ -39,7 +39,7 @@ var Planet = resourceful.define('planet', function () {
         }),
         probability = Math.random();
         
-    zone.planets.each(function(klass){
+    zone.planets.forEach(function(klass){
       var start = frequency; 
       
       frequency = frequency + parseFloat(klass.frequency);

@@ -9,7 +9,7 @@ exports.actions = function(req, res, ss) {
 
     all: function() {
       Ship.all(function(error, ships){
-        if(error){ return res(false); }
+        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
 
         ss.publish.all('ships', ships);
         return res(true);
@@ -34,12 +34,13 @@ exports.actions = function(req, res, ss) {
       });    
     },
     
-    update: function(id, params){
-      ss.log('➙'.cyan, 'params'.cyan, params)
+    update: function(id, params, flag){
+      ss.log('➙'.cyan, 'params'.cyan, params);
+      ss.log('➙'.cyan, 'flag'.cyan, flag);
       Ship.update(id, params, function(error, ship){
         if(error){ console.log(error); return res(false); }
         
-        ss.publish.all('ship', ship);
+        ss.publish.all('ship', ship, flag);
         return res(true);
       });    
     },

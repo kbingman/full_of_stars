@@ -34,15 +34,20 @@ var weaponsList = [
 
 ss.event.on('ships', function(ships) {
   Admin.ships = ships;
-  console.log(Admin.ships)
+  return exports.index(ships);
 });
 
-ss.event.on('ship', function(ship) {
+ss.event.on('ship', function(ship, flag) {
   Admin.ships = Admin.ships.remove(function(s){
     return s._id == ship._id;
   });
   Admin.ships.push(ship);
   Admin.ship = ship;
+  console.log('flag')
+  console.log(flag)
+  if(!flag){
+    return exports.edit(ship);
+  }
 });
 
 exports.index = function(){
@@ -81,6 +86,10 @@ exports.new = function(){
 }
 
 exports.edit = function(success){
+  if (Admin.editing){
+    Admin.editing = false; 
+    return
+  }
   
   // var ship = Admin.ships.find(function(s){
   //   return s._id == id;
@@ -130,12 +139,18 @@ exports.edit = function(success){
     e.preventDefault();
     clearTimeout(Admin.timer);
     Admin.timer = setTimeout(function(){ 
-      submitUpdate(ship._id, form); 
+      submitUpdate(ship._id, form, true); 
     }, 300);
   });
    
   form.on('submit', function(e){
     e.preventDefault();
+    submitUpdate(ship._id, form);
+  });
+  
+  form.find('input').on('blur', function(e){
+    e.preventDefault();
+    Admin.editing = false;
     submitUpdate(ship._id, form);
   });
   
@@ -146,9 +161,9 @@ exports.edit = function(success){
   
 }
 
-var submitUpdate = function(id, form){
+var submitUpdate = function(id, form, flag){
   var params = utilities.jsonifyParams(form.serializeArray());
-  ss.rpc('ships.update', id, params, function(success){
+  ss.rpc('ships.update', id, params, flag, function(success){
     console.log(success);
   });
 };
