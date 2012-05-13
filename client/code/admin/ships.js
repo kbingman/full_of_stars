@@ -109,10 +109,11 @@ exports.edit = function(success){
   
   $('#content').html(html);
   
-  $('form.list button').on('click', function(e){
+  $('fieldset.weapons-list button').on('click', function(e){
     e.preventDefault();
-    var form = $(this).parents('form');
-    var value = form.find('select').val();
+    var fieldset = $(this).parents('fieldset');
+    var value = fieldset.find('select').val();
+
     Admin.ship.weapons.push(value);
     
     ss.rpc('ships.update', Admin.ship._id, { weapons: Admin.ship.weapons }, function(success){

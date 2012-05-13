@@ -4,11 +4,9 @@
     <h3>Create Ship</h3>
 
     <form id="edit-ship-form" class="ship edit form-horizontal"> 
-    {{> admin-ships-form }}
-    </form>
-    
-    <form id="weapons-list" class="list form-horizontal">
-      <fieldset>
+      {{> admin-ships-form }}
+
+      <fieldset id="weapons-list" class="list">
         <div class="control-group">
           <label class="control-label" for="ship-weapons">Weapons</label>
           <div class="controls">
@@ -31,10 +29,9 @@
           </div>
         </div>
       </fieldset>
-    </form>
-    
-    <form id="defenses-list" class="list form-horizontal">
-      <fieldset>
+
+
+      <fieldset id="defenses-list" class="list">
         <div class="control-group">
           <label class="control-label" for="ship-weapons">Defenses</label>
           <div class="controls">
@@ -57,7 +54,18 @@
           </div>
         </div>
       </fieldset>
+ 
+    
+    
+      <div class="form-actions">
+        <button type="submit" class="btn btn-inverse">Save</button>
+        <a href="#/ships">Cancel</a>
+      </div>
+    
     </form>
+    
+
+    
     <h3>
       {{ name }} : {{ drive }} : {{ type }} : {{ drive }} : {{ fuel }}% Fuel : {{# weapons }}{{ . }}{{/ weapons }}
     </h3>
