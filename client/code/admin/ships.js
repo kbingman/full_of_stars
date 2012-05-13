@@ -24,9 +24,12 @@ var drivesList = [
   
 var weaponsList = [
   'Ship to Ship Missiles',
+  'Alpha Missiles',
+  'Neutron Bombs',
   'Planetary Bombardment Missiles',
   'Rail Guns',
-  'Lasers (really?)',
+  '50mm Cannon',
+  'Twelve Inch Gun', 
   'Plasma Cannons',
   'Gamma Cannons'
 ]
