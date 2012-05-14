@@ -40,7 +40,7 @@ exports.actions = function(req, res, ss) {
       Ship.update(id, params, function(error, ship){
         if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
         
-        ss.publish.all('ship', ship);
+        ss.publish.all('updateShip', ship);
         return res(true);
       });    
     },

@@ -1,21 +1,26 @@
 <fieldset>
   {{# name }}
-    {{> admin-ships-input }}
+    {{> admin-forms-input }}
   {{/ name }}
   
   {{# shape }}
-    {{> admin-ships-select }}
+    {{> admin-forms-select }}
   {{/ shape }}
   
   {{# size }}
-    {{> admin-ships-select }}
+    {{> admin-forms-select }}
   {{/ size }}
   
   {{# type }}
-    {{> admin-ships-select }}
+    {{> admin-forms-select }}
   {{/ type }}
   
   {{# drive }}
-    {{> admin-ships-select }}
+    {{> admin-forms-select }}
   {{/ drive }}
+  
+  {{# fuel }}
+    {{> admin-forms-input }}
+  {{/ fuel }}
+  
 </fieldset>

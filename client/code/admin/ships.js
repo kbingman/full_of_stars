@@ -1,58 +1,5 @@
 var utilities = require('/utilities');
-
-
-// TEMP!!!
-var sizesList = [
-  { name: "Small", size: "100" },
-  { name: "Medium", size: "1000" },
-  { name: "Large", size: "10,000" },
-  { name: "X-Large", size: "100,000" },
-  { name: "Immense", size: "1,000,00" },
-  { name: "Really really huge", size: "10,000,00" },
-  { name: "That's no Moon", size: "100,000,000" }
-];
-
-var shapesList = [
-  { name: "Sphere" },
-  { name: "Saucer" },
-  { name: "Cone" },
-  { name: "Needle" },
-  { name: "Wedge" },
-  { name: "Cube / Box" },
-  { name: "Despersed" },
-  { name: "Ring" }
-];
-
-
-var typesList = [
-  { name: 'Scout' },
-  { name: 'Colony' },
-  { name: 'Cargo' },
-  { name: 'Mining' },
-  { name: 'Science' },
-  { name: 'Close Escort' },
-  { name: 'Cruiser' },
-  { name: 'Destroyer' },
-  { name: 'Battle Station' }
-];
-  
-var drivesList = [
-  { name: 'Sublight In-System' },
-  { name: 'Sublight (40% C)' },
-  { name: 'High Accelleration Sublight (80% C)' },
-  { name: 'High Accelleration Sublight (99% C)' },
-  { name: 'Jump' }
-];
-  
-var weaponsList = [
-  { name: 'Ship to Ship Missles' },
-  { name: 'Planetary Bombardment Missles' },
-  { name: 'Rail Guns' },
-  { name: 'Lasers (really?)' },
-  { name: 'Plasma Cannons' },
-  { name: 'Gamma Cannons' }
-];
-
+var Ship = require('ship').Ship;
 
 ss.event.on('ships', function(ships) {
   Admin.ships = ships;
@@ -75,6 +22,7 @@ ss.event.on('updateShip', function(ship) {
   });
   Admin.ships.push(ship);
   Admin.ship = ship;
+  console.log('updated')
 });
 
 
@@ -183,50 +131,51 @@ var submitUpdate = function(id, form, flag){
 
 var partials = {
   'admin-ships-form': ss.tmpl['admin-ships-form'],
-  'admin-ships-select': ss.tmpl['admin-ships-select'],
-  'admin-ships-input': ss.tmpl['admin-ships-input']
+  'admin-forms-select': ss.tmpl['admin-forms-select'],
+  'admin-forms-input': ss.tmpl['admin-forms-input']
 }
 
 var context = function(ship){
   return {
     ship: ship,
+    model: 'ship',
     name: { 
       name: 'name',
       label: 'Name',
       value: ship.name,
       helpText: 'The Class Name.'
     },
+    fuel: {
+      name: 'fuel',
+      label: 'Fuel',
+      value: ship.fuel,
+      helpText: 'Percentage of Mass. We all need to gas up.'
+    },
     type: {
       name: 'type',
       label: 'Type',
-      list: utilities.mustachizeSelect('type', typesList, ship),
+      list: utilities.mustachizeSelect('type', Ship.types, ship),
       helpText: 'The basic use of you ship, i.e. War, Exploration, Transport'
     },
     size: {
       name: 'size',
       label: 'Size',
-      list: utilities.mustachizeSelect('size', sizesList, ship),
+      list: utilities.mustachizeSelect('size', Ship.sizes, ship),
       helpText: 'Size and Base price'
     },
     shape: {
       name: 'shape',
       label: 'Configuration',
-      list: utilities.mustachizeSelect('shape', shapesList, ship),
+      list: utilities.mustachizeSelect('shape', Ship.shapes, ship),
       helpText: 'Shape'
     },
     drive: {
       name: 'drive',
       label: 'Drive',
-      list: utilities.mustachizeSelect('drive', drivesList, ship),
+      list: utilities.mustachizeSelect('drive', Ship.drives, ship),
       helpText: 'Speed and Drive types. More types are available with better science.'
     },
-    fuel: {
-      name: 'drive',
-      label: 'Drive',
-      value: ship.fuel,
-      helpText: 'Percentage of Mass. We all need to gas up.'
-    },
-    weaponsList: weaponsList,
+    weaponsList: Ship.weapons,
     defensesList: []
   }
 }

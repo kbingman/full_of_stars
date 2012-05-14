@@ -1,7 +1,7 @@
 <div class="control-group">
-  <label class="control-label" for="ship-{{ name }}">{{ label }}</label>
+  <label class="control-label" for="{{ model }}-{{ name }}">{{ label }}</label>
   <div class="controls">
-    <select class="select large live" name="{{ name }}" id="ship-{{ name }}">
+    <select class="select large live" name="{{ name }}" id="{{ model }}-{{ name }}">
       {{# list }}
       <option {{ selected }}>{{ name }}</option>
       {{/ list }}
