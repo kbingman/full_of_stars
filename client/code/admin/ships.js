@@ -179,11 +179,3 @@ var context = function(ship){
     defensesList: []
   }
 }
-    
-    
-
-
-
-
-
-
