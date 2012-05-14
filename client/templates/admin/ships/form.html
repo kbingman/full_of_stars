@@ -1,51 +1,21 @@
 <fieldset>
-  <div class="control-group">
-    <label class="control-label" for="ship-name">Name</label>
-    <div class="controls">
-      <input type="text" class="input large" name="name" id="ship-name" value="{{ name }}">
-      <span class="help-inline">The Class Name</span>
-    </div>
-  </div>
+  {{# name }}
+    {{> admin-ships-input }}
+  {{/ name }}
   
-  <div class="control-group">
-    <label class="control-label" for="ship-size">Size</label>
-    <div class="controls">
-      <input type="text" class="input large" name="size" id="ship-size" value="{{ size }}">
-      <span class="help-inline">Price here?</span>
-    </div>
-  </div>
+  {{# shape }}
+    {{> admin-ships-select }}
+  {{/ shape }}
   
-  <div class="control-group">
-    <label class="control-label" for="ship-type">Type</label>
-    <div class="controls">
-      <select class="select large" name="type" id="ship-type">
-        {{# typesList }}
-        <option {{ selected }}>{{ name }}</option>
-        {{/ typesList }}
-      </select>
-      <span class="help-inline">The basic use of you ship, i.e. War, Exploration, Transport</span>
-    </div>
-  </div>
+  {{# size }}
+    {{> admin-ships-select }}
+  {{/ size }}
   
-  <div class="control-group">
-    <label class="control-label" for="ship-type">Drive</label>
-    <div class="controls">
-      <select class="select large" name="drive" id="ship-drive">
-        {{# drivesList }}
-        <option {{ selected }}>{{ name }}</option>
-        {{/ drivesList }}
-      </select>
-      <span class="help-inline">Speed and Drive types. More types are available with better science</span>
-    </div>
-  </div>
+  {{# type }}
+    {{> admin-ships-select }}
+  {{/ type }}
   
-  <div class="control-group">
-    <label class="control-label" for="ship-fuel">Fuel</label>
-    <div class="controls">
-      <input type="text" class="input large" name="fuel" id="ship-fuel" value="{{ fuel }}">
-      <span class="help-inline">Percentage of Mass. We all need to gas up</span>
-    </div>
-  </div>
-  
-  
+  {{# drive }}
+    {{> admin-ships-select }}
+  {{/ drive }}
 </fieldset>

@@ -2,34 +2,56 @@ var utilities = require('/utilities');
 
 
 // TEMP!!!
+var sizesList = [
+  { name: "Small", size: "100" },
+  { name: "Medium", size: "1000" },
+  { name: "Large", size: "10,000" },
+  { name: "X-Large", size: "100,000" },
+  { name: "Immense", size: "1,000,00" },
+  { name: "Really really huge", size: "10,000,00" },
+  { name: "That's no Moon", size: "100,000,000" }
+];
+
+var shapesList = [
+  { name: "Sphere" },
+  { name: "Saucer" },
+  { name: "Cone" },
+  { name: "Needle" },
+  { name: "Wedge" },
+  { name: "Cube / Box" },
+  { name: "Despersed" },
+  { name: "Ring" }
+];
+
+
 var typesList = [
-  'Scout',
-  'Colony',
-  'Cargo',
-  'Mining',
-  'Science',
-  'Close Escort',
-  'Cruiser',
-  'Destroyer',
-  'Battle Station'
+  { name: 'Scout' },
+  { name: 'Colony' },
+  { name: 'Cargo' },
+  { name: 'Mining' },
+  { name: 'Science' },
+  { name: 'Close Escort' },
+  { name: 'Cruiser' },
+  { name: 'Destroyer' },
+  { name: 'Battle Station' }
 ];
   
 var drivesList = [
-  'Sublight In-System',
-  'Sublight (40% C)',
-  'High Accelleration Sublight (80% C)',
-  'High Accelleration Sublight (99% C)',
-  'Jump'
+  { name: 'Sublight In-System' },
+  { name: 'Sublight (40% C)' },
+  { name: 'High Accelleration Sublight (80% C)' },
+  { name: 'High Accelleration Sublight (99% C)' },
+  { name: 'Jump' }
 ];
   
 var weaponsList = [
-  'Ship to Ship Missles',
-  'Planetary Bombardment Missles',
-  'Rail Guns',
-  'Lasers (really?)',
-  'Plasma Cannons',
-  'Gamma Cannons'
-]
+  { name: 'Ship to Ship Missles' },
+  { name: 'Planetary Bombardment Missles' },
+  { name: 'Rail Guns' },
+  { name: 'Lasers (really?)' },
+  { name: 'Plasma Cannons' },
+  { name: 'Gamma Cannons' }
+];
 
 
 ss.event.on('ships', function(ships) {
@@ -37,21 +59,26 @@ ss.event.on('ships', function(ships) {
   return exports.index(ships);
 });
 
-ss.event.on('ship', function(ship, flag) {
+ss.event.on('ship', function(ship) {
   Admin.ships = Admin.ships.remove(function(s){
     return s._id == ship._id;
   });
   Admin.ships.push(ship);
   Admin.ship = ship;
-  console.log('flag')
-  console.log(flag)
-  if(!flag){
-    return exports.edit(ship);
-  }
+
+  return exports.edit(ship);
 });
 
+ss.event.on('updateShip', function(ship) {
+  Admin.ships = Admin.ships.remove(function(s){
+    return s._id == ship._id;
+  });
+  Admin.ships.push(ship);
+  Admin.ship = ship;
+});
+
+
 exports.index = function(){
-  
   ships = Admin.ships;
   var html = ss.tmpl['admin-ships-index'].render({
     ships: ships
@@ -61,14 +88,7 @@ exports.index = function(){
 }
 
 exports.new = function(){
-  var partials = {
-    'admin-ships-form': ss.tmpl['admin-ships-form']
-  }
-  var html = ss.tmpl['admin-ships-new'].render({
-    typesList: utilities.mustachizeSelect('type', typesList),
-    drivesList: utilities.mustachizeSelect('drive', drivesList),
-    weaponsList: weaponsList
-  }, partials);
+  var html = ss.tmpl['admin-ships-new'].render(context(), partials);
   
   $('#content').html(html);
   
@@ -96,24 +116,16 @@ exports.edit = function(success){
   // });
   ship = Admin.ship;
   
-  var partials = {
-    'admin-ships-form': ss.tmpl['admin-ships-form']
-  };
-  var html = ss.tmpl['admin-ships-edit'].render({
-    ship: ship,
-    typesList: utilities.mustachizeSelect('type', typesList, ship),
-    drivesList: utilities.mustachizeSelect('drive', drivesList, ship),
-    weaponsList: weaponsList
-  }, partials);
+  var html = ss.tmpl['admin-ships-edit'].render(context(ship), partials);
   
   
   $('#content').html(html);
   
-  $('fieldset.weapons-list button').on('click', function(e){
+  $('fieldset.list button').on('click', function(e){
     e.preventDefault();
     var fieldset = $(this).parents('fieldset');
     var value = fieldset.find('select').val();
-
+    
     Admin.ship.weapons.push(value);
     
     ss.rpc('ships.update', Admin.ship._id, { weapons: Admin.ship.weapons }, function(success){
@@ -136,26 +148,26 @@ exports.edit = function(success){
   // Events
   var form = $('form#edit-ship-form');
   
-  form.on('keyup', function(e){
-    e.preventDefault();
-    clearTimeout(Admin.timer);
-    Admin.timer = setTimeout(function(){ 
-      submitUpdate(ship._id, form, true); 
-    }, 300);
-  });
+  // form.on('keyup', function(e){
+  //   e.preventDefault();
+  //   clearTimeout(Admin.timer);
+  //   Admin.timer = setTimeout(function(){ 
+  //     submitUpdate(ship._id, form, true); 
+  //   }, 300);
+  // });
    
   form.on('submit', function(e){
     e.preventDefault();
     submitUpdate(ship._id, form);
   });
   
-  form.find('input').on('blur', function(e){
-    e.preventDefault();
-    Admin.editing = false;
-    submitUpdate(ship._id, form);
-  });
-  
-  form.find('select').on('change', function(e){
+  // form.find('input').on('blur', function(e){
+  //   e.preventDefault();
+  //   Admin.editing = false;
+  //   submitUpdate(ship._id, form);
+  // });
+  // 
+  form.find('select.live').on('change', function(e){
     e.preventDefault();
     submitUpdate(ship._id, form);
   });
@@ -168,6 +180,56 @@ var submitUpdate = function(id, form, flag){
     console.log(success);
   });
 };
+
+var partials = {
+  'admin-ships-form': ss.tmpl['admin-ships-form'],
+  'admin-ships-select': ss.tmpl['admin-ships-select'],
+  'admin-ships-input': ss.tmpl['admin-ships-input']
+}
+
+var context = function(ship){
+  return {
+    ship: ship,
+    name: { 
+      name: 'name',
+      label: 'Name',
+      value: ship.name,
+      helpText: 'The Class Name.'
+    },
+    type: {
+      name: 'type',
+      label: 'Type',
+      list: utilities.mustachizeSelect('type', typesList, ship),
+      helpText: 'The basic use of you ship, i.e. War, Exploration, Transport'
+    },
+    size: {
+      name: 'size',
+      label: 'Size',
+      list: utilities.mustachizeSelect('size', sizesList, ship),
+      helpText: 'Size and Base price'
+    },
+    shape: {
+      name: 'shape',
+      label: 'Configuration',
+      list: utilities.mustachizeSelect('shape', shapesList, ship),
+      helpText: 'Shape'
+    },
+    drive: {
+      name: 'drive',
+      label: 'Drive',
+      list: utilities.mustachizeSelect('drive', drivesList, ship),
+      helpText: 'Speed and Drive types. More types are available with better science.'
+    },
+    fuel: {
+      name: 'drive',
+      label: 'Drive',
+      value: ship.fuel,
+      helpText: 'Percentage of Mass. We all need to gas up.'
+    },
+    weaponsList: weaponsList,
+    defensesList: []
+  }
+}
     
     
 

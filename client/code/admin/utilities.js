@@ -19,8 +19,8 @@ exports.openModal = function(){
 exports.mustachizeSelect = function(attr, array, object){
   return array.map(function(d){
     return { 
-      name: d, 
-      selected: object && d == object[attr] ? 'selected' : '' 
+      name: d.name,
+      selected: object && d.name == object[attr] ? 'selected' : '' 
     }
   });
 }

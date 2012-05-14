@@ -1,3 +1,5 @@
+require('director');
+
 var players = require('/players');
 var sectors = require('/sectors');
 var systems = require('/systems');

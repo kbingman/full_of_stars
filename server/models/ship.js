@@ -1,4 +1,4 @@
-var resourceful = require('resourceful');
+var resourceful = require('resourceful-mongo');
 
 var Ship = resourceful.define('ship', function () {
   
@@ -23,7 +23,8 @@ var Ship = resourceful.define('ship', function () {
   this.property('speed', Number);
   this.property('scienceLevel', Number);
   
-  this.property('size', Number);
+  // this.property('size', String);
+  this.property('shape', String);
   this.property('armor', Array);
   this.property('weapons', Array);
   this.property('drive', String);
@@ -33,7 +34,7 @@ var Ship = resourceful.define('ship', function () {
   this.before('create', function(ship, callback) {
     // Defaults
     ship.weapons = [];
-    ship.size = parseInt(ship.size);
+    // ship.size = parseInt(ship.size);
     callback();
   });
   

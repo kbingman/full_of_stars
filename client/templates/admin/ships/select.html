@@ -1,0 +1,11 @@
+<div class="control-group">
+  <label class="control-label" for="ship-{{ name }}">{{ label }}</label>
+  <div class="controls">
+    <select class="select large live" name="{{ name }}" id="ship-{{ name }}">
+      {{# list }}
+      <option {{ selected }}>{{ name }}</option>
+      {{/ list }}
+    </select>
+    <span class="help-inline">{{ helpText }}</span>
+  </div>
+</div>

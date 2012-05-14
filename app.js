@@ -17,8 +17,8 @@ ss.client.define('main', {
 ss.client.define('admin', {
   view: 'admin.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'admin.css'],
-  code: ['libs/director.js', 'libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'admin'],
-  system: '*',
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'admin', 'system'],
+  system: ['models/weapons.js'],
   tmpl: '*'
 });
 
@@ -39,26 +39,29 @@ ss.http.route('/admin', function(req, res){
 ss.client.templateEngine.use(require('ss-hogan'));
 
 // Minimize and pack assets if you type: SS_ENV=production node app.js
-// if (ss.env == 'production') ss.client.packAssets();
+if (ss.env == 'production') ss.client.packAssets();
 
 // redis://nodejitsu:351ce528621de5837d0f6c7828789ad2@panga.redistogo.com:9538/
 
-// Start web server
-var server = http.Server(ss.http.middleware);
-server.listen(3000);
-
 if (ss.env == 'production'){
-  // ss.session.store.use('redis', {
-  //   uri: 'redis://nodejitsu:351ce528621de5837d0f6c7828789ad2@panga.redistogo.com:9538/'
-  // });
-  // ss.publish.transport.use('redis', {
-  //   uri: 'redis://nodejitsu:351ce528621de5837d0f6c7828789ad2@panga.redistogo.com:9538/'
-  // });
+  ss.session.store.use('redis', {
+    host: 'panga.redistogo.com', 
+    port: 9538, 
+    pass: '351ce528621de5837d0f6c7828789ad2'
+  });
+  ss.publish.transport.use('redis', {
+    host: 'panga.redistogo.com', 
+    port: 9538, 
+    pass: '351ce528621de5837d0f6c7828789ad2'
+  });
   resourceful.db = 'mongodb://fullofstars:123456@staff.mongohq.com:10057/fullOfStars';
 } else {
   resourceful.db = 'mongodb://localhost/planetary'; 
 }
 
+// Start web server
+var server = http.Server(ss.http.middleware);
+server.listen(3000);
 
 
 // Open the mongodb connection

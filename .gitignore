@@ -3,5 +3,5 @@ dump.rdb
 node_modules
 npm-debug.log
 tmp
-public/assets
+static/assets
 .nide
