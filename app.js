@@ -8,7 +8,7 @@ var http = require('http'),
 ss.client.define('main', {
   view: 'app.html',
   css:  ['libs/bootstrap', 'index.css'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'app'],
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'app'],
   system: '*',
   tmpl: '*'
 });
@@ -16,8 +16,8 @@ ss.client.define('main', {
 // Define a single-page client
 ss.client.define('admin', {
   view: 'admin.html',
-  css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'admin.css'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'admin', 'system'],
+  css:  ['libs/bootstrap', '/admin'],
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'admin', 'system'],
   system: ['models/weapons.js'],
   tmpl: '*'
 });
@@ -33,7 +33,7 @@ ss.http.route('/admin', function(req, res){
 });
 
 // Code Formatters
-// ss.client.formatters.add(require('ss-stylus'));
+ss.client.formatters.add(require('ss-less'));
 
 // Use server-side compiled Hogan (Mustache) templates. Others engines available
 ss.client.templateEngine.use(require('ss-hogan'));
@@ -63,6 +63,8 @@ if (ss.env == 'production'){
 var server = http.Server(ss.http.middleware);
 server.listen(3000);
 
+console.log(resourceful.engines)
+// ss.start(server);
 
 // Open the mongodb connection
 resourceful.use('mongodb', {

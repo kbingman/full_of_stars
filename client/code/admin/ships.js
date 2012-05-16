@@ -1,44 +1,47 @@
 var utilities = require('/utilities');
 var Ship = require('ship').Ship;
+var shipsIndexPresenter = require('/presenters/ships_index');
+var editShipPresenter = require('/presenters/edit_ship');
+var updateShipPresenter = require('/presenters/update_ship');
+var newPresenter = require('/presenters/new_ship');
 
+
+// Socket Emitters
+// ------------------------------------------------ //
 ss.event.on('ships', function(ships) {
-  Admin.ships = ships;
-  return exports.index(ships);
+  Admin.ships = ships.map(function(params){
+    return new Ship(params)
+  });
+  return shipsIndexPresenter.present(Admin.ships);
 });
 
-ss.event.on('ship', function(ship) {
+ss.event.on('ship', function(params) {
   Admin.ships = Admin.ships.remove(function(s){
-    return s._id == ship._id;
+    return s._id == params._id;
   });
-  Admin.ships.push(ship);
-  Admin.ship = ship;
-
-  return exports.edit(ship);
+  Admin.ship = new Ship(params);
+  Admin.ship.save(function(err, ship){
+    Admin.ships.push(ship);
+  });
+  
+  return exports.edit(Admin.ship);
 });
 
-ss.event.on('updateShip', function(ship) {
-  Admin.ships = Admin.ships.remove(function(s){
-    return s._id == ship._id;
+ss.event.on('updateShip', function(params) {
+  Ship.update(params._id, params, function(err, ship){
+    updateShipPresenter.present(ship);
   });
-  Admin.ships.push(ship);
-  Admin.ship = ship;
-  console.log('updated')
 });
 
 
-exports.index = function(){
-  ships = Admin.ships;
-  var html = ss.tmpl['admin-ships-index'].render({
-    ships: ships
-  });
+// Views
+// ------------------------------------------------ //
 
-  $('#content').html(html);
-}
 
 exports.new = function(){
-  var html = ss.tmpl['admin-ships-new'].render(context(), partials);
+
+  newPresenter.present();
   
-  $('#content').html(html);
   
   // Events
   $('form#new-ship-form').on('submit', function(e){
@@ -53,22 +56,12 @@ exports.new = function(){
   });
 }
 
-exports.edit = function(success){
-  if (Admin.editing){
-    Admin.editing = false; 
-    return
-  }
-  
-  // var ship = Admin.ships.find(function(s){
-  //   return s._id == id;
-  // });
-  ship = Admin.ship;
-  
-  var html = ss.tmpl['admin-ships-edit'].render(context(ship), partials);
-  
-  
-  $('#content').html(html);
-  
+exports.edit = function(){
+
+  editShipPresenter.present(Admin.ship);
+  updateShipPresenter.present(Admin.ship);
+  // Events
+
   $('fieldset.list button').on('click', function(e){
     e.preventDefault();
     var fieldset = $(this).parents('fieldset');
@@ -82,7 +75,7 @@ exports.edit = function(success){
     });
   });
   
-  $('ul.weapons a.remove').on('click', function(){
+  $('fieldset.list a.remove').on('click', function(){
     var value = $(this).prev('span').text();
     Admin.ship.weapons = Admin.ship.weapons .remove(function(w){
       return w == value;
@@ -93,89 +86,40 @@ exports.edit = function(success){
     });
   })
   
-  // Events
-  var form = $('form#edit-ship-form');
   
-  // form.on('keyup', function(e){
-  //   e.preventDefault();
-  //   clearTimeout(Admin.timer);
-  //   Admin.timer = setTimeout(function(){ 
-  //     submitUpdate(ship._id, form, true); 
-  //   }, 300);
-  // });
+  var form = $('form#edit-ship-form');
+  form.on('keyup', function(e){
+    e.preventDefault();
+    clearTimeout(Admin.timer);
+    Admin.timer = setTimeout(function(){ 
+      submitUpdate(Admin.ship._id, form, true); 
+    }, 100);
+  });
    
   form.on('submit', function(e){
     e.preventDefault();
-    submitUpdate(ship._id, form);
+    submitUpdate(Admin.ship._id, form);
   });
   
-  // form.find('input').on('blur', function(e){
-  //   e.preventDefault();
-  //   Admin.editing = false;
-  //   submitUpdate(ship._id, form);
-  // });
-  // 
   form.find('select.live').on('change', function(e){
     e.preventDefault();
-    submitUpdate(ship._id, form);
+    submitUpdate(Admin.ship._id, form);
   });
   
+  form.find('.radio').on('click', function(e){
+    if(e.target.tagName === 'BUTTON'){
+      $(this).find('input').val($(e.target).text());
+      e.preventDefault();
+      submitUpdate(Admin.ship._id, form);
+    }
+  });
 }
 
 var submitUpdate = function(id, form, flag){
-  var params = utilities.jsonifyParams(form.serializeArray());
-  ss.rpc('ships.update', id, params, flag, function(success){
-    console.log(success);
+  form.serializeArray().forEach(function(attr){
+    Admin.ship[attr.name] = attr.value;
+  });
+  Admin.ship.update(function(err, ship){
+    //updateShipPresenter.present(ship);
   });
 };
-
-var partials = {
-  'admin-ships-form': ss.tmpl['admin-ships-form'],
-  'admin-forms-select': ss.tmpl['admin-forms-select'],
-  'admin-forms-input': ss.tmpl['admin-forms-input']
-}
-
-var context = function(ship){
-  return {
-    ship: ship,
-    model: 'ship',
-    name: { 
-      name: 'name',
-      label: 'Name',
-      value: ship.name,
-      helpText: 'The Class Name.'
-    },
-    fuel: {
-      name: 'fuel',
-      label: 'Fuel',
-      value: ship.fuel,
-      helpText: 'Percentage of Mass. We all need to gas up.'
-    },
-    type: {
-      name: 'type',
-      label: 'Type',
-      list: utilities.mustachizeSelect('type', Ship.types, ship),
-      helpText: 'The basic use of you ship, i.e. War, Exploration, Transport'
-    },
-    size: {
-      name: 'size',
-      label: 'Size',
-      list: utilities.mustachizeSelect('size', Ship.sizes, ship),
-      helpText: 'Size and Base price'
-    },
-    shape: {
-      name: 'shape',
-      label: 'Configuration',
-      list: utilities.mustachizeSelect('shape', Ship.shapes, ship),
-      helpText: 'Shape'
-    },
-    drive: {
-      name: 'drive',
-      label: 'Drive',
-      list: utilities.mustachizeSelect('drive', Ship.drives, ship),
-      helpText: 'Speed and Drive types. More types are available with better science.'
-    },
-    weaponsList: Ship.weapons,
-    defensesList: []
-  }
-}

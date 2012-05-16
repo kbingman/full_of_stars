@@ -7,8 +7,10 @@
       <tr>
         <th class='name'>Name</th>
         <th class='type'>Type</th>
-        <th class='type'>Drive</th>
+        <th class='type'>Sublight</th>
+        <th class='type'>Jump</th>
         <th class='weapons'>Weapons</th>
+        <th class='usc'>USC</th>
       </tr>
     </thead>
     <tbody>
@@ -16,8 +18,10 @@
       <tr id="sector_{{ _id }}">
         <td class='name'><a href="#/ships/{{ _id }}">{{ name }}</a></td>
         <td class='type'>{{ type }}</td>
-        <td class='drive'>{{ drive }}</td>
+        <td class='drive'>{{ sublight }}g</td>
+        <td class='drive'>{{ jump }} Parsecs</td>
         <td class='weapons'>{{ weapons }}</td>
+        <td class='usc'>{{ usc }}</td>
       </tr>
     {{/ ships }}
     </tbody>
