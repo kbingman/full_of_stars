@@ -8,7 +8,7 @@ var flatiron = require('flatiron'),
     
 app.use(flatiron.plugins.http);
 
-// app.http.before.push(ss.http.middleware);
+app.http.before.push(ss.http.middleware);
         
 // Define a single-page client
 ss.client.define('main', {
