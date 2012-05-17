@@ -7,6 +7,7 @@ var flatiron = require('flatiron'),
     resourceful = require('resourceful-mongo');
     
 app.use(flatiron.plugins.http);
+
 app.http.before.push(ss.http.middleware);
         
 // Define a single-page client
@@ -29,9 +30,7 @@ ss.client.define('admin', {
 
 // Serve this client on the root URL
 app.router.get('/', function () {
-  console.log(ss.http.middleware)
-  this.res.json({ 'hello': 'world' });
-  // this.res.serveClient('main');
+  this.res.serveClient('main');
 });
 
 
