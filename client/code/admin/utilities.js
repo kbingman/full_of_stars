@@ -1,3 +1,6 @@
+require('sugar');
+require('inflections');
+
 exports.jsonifyParams = function(array){
   var params = {};
   array.map(function(p){
@@ -20,7 +23,18 @@ exports.mustachizeSelect = function(attr, array, object){
   return array.map(function(d){
     return { 
       name: d.name,
-      selected: object && d.name == object[attr] ? 'selected' : '' 
+      selected: object && d.name == object[attr]
     }
   });
 }
+
+exports.formAttributes = function(name, object, helpText, list){
+  return {
+    name: name,
+    label: name.titleize(),
+    value: object[name],
+    list: exports.mustachizeSelect(name, list, object),
+    helpText: helpText
+  }
+}
+

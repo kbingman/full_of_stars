@@ -1,11 +1,12 @@
 <div class="row">
-  <div class="span9">
+  <div class="span12">
+    <div id="ship-usc" class="well">
+    {{> admin-ships-ship }}
+    </div>
     
-    <h3>Create Ship</h3>
-
     <form id="edit-ship-form" class="ship edit form-horizontal"> 
       {{> admin-ships-form }}
-      {{# ship }}
+      
       <fieldset id="weapons-list" class="list">
         <div class="control-group">
           <label class="control-label" for="ship-weapons">Weapons</label>
@@ -23,7 +24,7 @@
           <div class="controls">
             <ul class="weapons">
             {{# weapons }}
-              <li><span>{{ . }}</span><a class="close remove">&times;</a></li>
+              <li id="w_{{ index }}"><span>{{ name }}</span><a data-index="{{ index }}" class="close remove">&times;</a></li>
             {{/ weapons }}
             </ul>
           </div>
@@ -62,9 +63,5 @@
     
     </form>
 
-    <h3>
-      {{ name }} : {{ drive }} : {{ type }} : {{ drive }} : {{ fuel }}% Fuel : {{# weapons }}{{ . }}{{/ weapons }}
-    </h3>
-    {{/ ship }}
   </div>
 </div>

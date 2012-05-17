@@ -36,7 +36,7 @@ exports.actions = function(req, res, ss) {
     },
     
     update: function(id, params){
-      ss.log('➙'.cyan, 'params'.cyan, params);
+      // ss.log('➙'.cyan, 'params'.cyan, params);
       Ship.update(id, params, function(error, ship){
         if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
         

@@ -1,0 +1,14 @@
+<div class="control-group">
+
+  <label class="control-label" for="{{ model }}-{{ name }}">{{ label }}</label>
+  <div class="controls radio">
+    <div class="btn-group" data-toggle="buttons-radio">
+      {{# list }}
+      <button rel="{{ name }}" class="btn{{# selected }} active{{/ selected }}">{{ name }}</button>
+      {{/ list }}
+    </div>
+    <input type="hidden" name="{{ name }}" value="{{ value }}">
+    <div class="help-inline">{{ helpText }}</div>
+  </div>
+
+</div>

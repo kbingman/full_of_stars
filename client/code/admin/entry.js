@@ -21,6 +21,8 @@ ss.server.on('ready', function(){
   // Wait for the DOM to finish loading
   jQuery(function(){
     
+    require('sugar');
+    require('array');
     require('/router');
     require('/utilities');
     require('/ships');

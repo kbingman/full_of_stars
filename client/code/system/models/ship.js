@@ -1,62 +1,62 @@
 require('resourceful');
 
 var Ship = resourceful.define('ship', function () {
+  this.use('memory');
   
   this.property('name', String);
   this.property('price', String);
 
+  this.property('slug', String);
+  this.property('player_id', String);
+  this.property('number', Number)
+  
+  this.property('paths', Array);
+  this.property('speed', Number);
+  this.property('x', Number);
+  this.property('y', Number);
+  
+  this.property('type', String)
+  
+  this.property('speed', Number);
+  this.property('scienceLevel', Number);
+  
+  this.property('size', String);
+  this.property('shape', String);
+  this.property('armor', Array);
+  this.property('weapons', Array);
+  this.property('drive', String);
+  this.property('fuel', String);
+  
+  this.prototype.usc = function(){
+    return 'code';
+  };
 });
 
-Ship.weapons = [
-  { name: 'Ship to Ship Missles' },
-  { name: 'Planetary Bombardment Missles' },
-  { name: 'Rail Guns' },
-  { name: 'Lasers (really?)' },
-  { name: 'Plasma Cannons' },
-  { name: 'Gamma Cannons' }
-];
+Ship.prototype.update = function(callback){
+  var self = this;
 
-Ship.sizes = [
-  { name: "Small", size: "100" },
-  { name: "Medium", size: "1000" },
-  { name: "Large", size: "10,000" },
-  { name: "X-Large", size: "100,000" },
-  { name: "Immense", size: "1,000,00" },
-  { name: "Really really huge", size: "10,000,00" },
-  { name: "That's no Moon", size: "100,000,000" }
-];
+  this.save(function(err, ship){
+    var params = self.toJSON();
+    delete params['_id'];
+    callback(err, ship)
+    ss.rpc('ships.update', self.id, params, function(success){
+      console.log(success);
+    });
+  });
+}
 
-Ship.shapes = [
-  { name: "Sphere" },
-  { name: "Saucer" },
-  { name: "Cone" },
-  { name: "Needle" },
-  { name: "Wedge" },
-  { name: "Cube / Box" },
-  { name: "Despersed" },
-  { name: "Ring" }
-];
-
-
-Ship.types = [
-  { name: 'Scout' },
-  { name: 'Colony' },
-  { name: 'Cargo' },
-  { name: 'Mining' },
-  { name: 'Science' },
-  { name: 'Close Escort' },
-  { name: 'Cruiser' },
-  { name: 'Destroyer' },
-  { name: 'Battle Station' }
-];
-  
-Ship.drives = [
-  { name: 'Sublight In-System' },
-  { name: 'Sublight (40% C)' },
-  { name: 'High Accelleration Sublight (80% C)' },
-  { name: 'High Accelleration Sublight (99% C)' },
-  { name: 'Jump' }
-];
-
+Ship.prototype.helpText = function(attr){
+  var text = {
+    'name'    : 'The Class name.',
+    'shape'   : 'Shape',
+    'size'    : 'Size and Base price',
+    'type'    : 'The basic use of you ship, i.e. War, Exploration, Transport, etc.',
+    'jump'    : 'Maximum range in parsecs per jump.',
+    'sublight': 'Maximum accelleration in Gs.',
+    'weapons' : 'More types are available with better science. Invest wisely.',
+    'defenses': 'Does not work yet.'
+  }
+  return text[attr]
+}
 
 exports.Ship = Ship;
