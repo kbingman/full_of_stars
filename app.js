@@ -1,5 +1,3 @@
-// My SocketStream app
-
 var http = require('http'),
     ss = require('socketstream'),
     resourceful = require('resourceful-mongo');
@@ -34,45 +32,35 @@ ss.http.route('/admin', function(req, res){
 
 // Code Formatters
 ss.client.formatters.add(require('ss-less'));
-
-// Use server-side compiled Hogan (Mustache) templates. Others engines available
 ss.client.templateEngine.use(require('ss-hogan'));
 
-// Minimize and pack assets if you type: SS_ENV=production node app.js
-if (ss.env == 'production') ss.client.packAssets();
-
-// redis://nodejitsu:351ce528621de5837d0f6c7828789ad2@panga.redistogo.com:9538/
-
+// Production settings: SS_ENV=production node app.js
 if (ss.env == 'production'){
-  ss.session.store.use('redis', {
+  ss.client.packAssets();
+  var redisCredentials =  {
     host: 'panga.redistogo.com', 
     port: 9538, 
     pass: '351ce528621de5837d0f6c7828789ad2'
-  });
-  ss.publish.transport.use('redis', {
-    host: 'panga.redistogo.com', 
-    port: 9538, 
-    pass: '351ce528621de5837d0f6c7828789ad2'
-  });
+  }
+  ss.session.store.use('redis', redisCredentials);
+  ss.publish.transport.use('redis', redisCredentials);
   resourceful.db = 'mongodb://fullofstars:123456@staff.mongohq.com:10057/fullOfStars';
-} else {
+} else if (ss.env == 'development') {
   resourceful.db = 'mongodb://localhost/planetary'; 
+} else {
+  resourceful.db = 'mongodb://localhost/planetary_test'; 
 }
-
-// Start web server
-var server = http.Server(ss.http.middleware);
-server.listen(3000);
-
-console.log(resourceful.engines)
-// ss.start(server);
 
 // Open the mongodb connection
 resourceful.use('mongodb', {
-  uri: resourceful.db, // required - the connection to be opened
-  onConnect: function (err) { // required - the callback upon opening the database connection
-    // Start SocketStream
+  uri: resourceful.db, 
+  onConnect: function (err) { 
     if(!err){
       console.log('connected')
+      // Start web server
+      var server = http.Server(ss.http.middleware);
+      server.listen(3000);
+      // Start SocketStream
       ss.start(server);
     }
   }
