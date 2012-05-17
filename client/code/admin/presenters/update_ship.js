@@ -5,7 +5,7 @@ exports.present = function(ship){
     price: ship.price ? ship.price.format() : 0
   });
 
-  $('#ship-usc').replaceWith(html);
+  $('#ship-usc').html(html);
   draw(ship.price)
 }
 
