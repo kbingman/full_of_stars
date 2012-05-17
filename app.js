@@ -52,8 +52,10 @@ if (ss.env == 'production'){
     pass: '351ce528621de5837d0f6c7828789ad2'
   });
   resourceful.db = 'mongodb://fullofstars:123456@staff.mongohq.com:10057/fullOfStars';
-} else {
+} else if (ss.env == 'development') {
   resourceful.db = 'mongodb://localhost/planetary'; 
+} else {
+  resourceful.db = 'mongodb://localhost/planetary_test'; 
 }
 
 // Open the mongodb connection

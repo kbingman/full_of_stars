@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
+    <script src="../../client/code/libs/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../client/code/system/sugar.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../client/code/system/resourceful.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="../../client/code/admin/entry.js" type="text/javascript" charset="utf-8"></script>
+    <!--script src="../../client/code/admin/utilities.js" type="text/javascript" charset="utf-8"></script-->
+    <!--script src="../../client/code/admin/presenters/edit_ship.js" type="text/javascript" charset="utf-8"></script-->
+    
+    <script src="../../node_modules/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="../../node_modules/chai/chai.js"></script>
+    
+    <script src="sector_chai.js" type="text/javascript" charset="utf-8"></script>
+    
+    <script>
+      Admin = {}
+    </script>
+    
+    <script>
+      onload = function() {
+        mocha.run();
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+  </body>
+</html>
