@@ -73,7 +73,10 @@ exports.getCurrentPlayer = function(req, res, callback){
   
 }
 
-exports.handleErrors = function(){
-  if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
+exports.handleErrors = function(req, res, ss, error){
+  if(error){ 
+    ss.log('➙'.red, 'error'.red, error); 
+    return res(false); 
+  }
 }
 

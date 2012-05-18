@@ -10,10 +10,10 @@ exports.actions = function(req, res, ss) {
 
     all: function() {
       app.getCurrentPlayer(req, res, function(error, player){
-        app.handleErrors
+        app.handleErrors(req, res, ss, error); 
         
-        Ship.all(function(error, ships){
-          app.handleErrors
+        Ship.find({ 'playerId': player._id.toString() }, function(error, ships){
+          app.handleErrors(req, res, ss, error); 
 
           ss.publish.all('ships', ships);
           return res(true);
@@ -24,7 +24,7 @@ exports.actions = function(req, res, ss) {
     
     create: function(params){
       app.getCurrentPlayer(req, res, function(error, player){
-        app.handleErrors
+        app.handleErrors(req, res, ss, error); 
         
         params['playerId'] = player._id.toString();
         ss.log('➙'.cyan, 'params'.cyan, params);
@@ -51,15 +51,16 @@ exports.actions = function(req, res, ss) {
     
     update: function(id, params){
       app.getCurrentPlayer(req, res, function(error, player){
-        app.handleErrors;
+        app.handleErrors(req, res, ss, error); 
         
         Ship.get(id, function(error, ship){
-          app.handleErrors; 
-          console.log(ship)
+          app.handleErrors(req, res, ss, error);
+          ss.log('➙'.cyan, 'params'.cyan, params); 
+          ss.log('➙'.blue, 'ship'.cyan, ship);
     
           if(ship && ship.playerId === player._id.toString()){
             ship.update(params, function(error, ship){
-              app.handleErrors; 
+              app.handleErrors(req, res, ss, error); 
             
               ss.publish.all('updateShip', ship);
               return res(true);
@@ -75,7 +76,7 @@ exports.actions = function(req, res, ss) {
     
     destroy: function(params){
       app.getCurrentPlayer(req, res, function(error, player){
-        app.handleErrors
+        app.handleErrors(req, res, ss, error); 
       
         Ship.destroy(function(error){
           if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
@@ -90,6 +91,3 @@ exports.actions = function(req, res, ss) {
   
 };
 
-var handleErrors = function(error){
-  if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
-}
