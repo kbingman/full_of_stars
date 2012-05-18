@@ -32,13 +32,11 @@ var Ship = resourceful.define('ship', function () {
   };
 });
 
-Ship.prototype.update = function(callback){
+Ship.prototype.update = function(params){
   var self = this;
 
+  // finally using fucking apply...
   this.save(function(err, ship){
-    var params = self.toJSON();
-    delete params['_id'];
-    callback(err, ship)
     ss.rpc('ships.update', self.id, params, function(success){
       console.log(success);
     });

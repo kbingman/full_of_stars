@@ -22,19 +22,54 @@ exports.openModal = function(){
 exports.mustachizeSelect = function(attr, array, object){
   return array.map(function(d){
     return { 
-      name: d.name,
+      attr: attr, 
+      value: d.name,
       selected: object && d.name == object[attr]
     }
   });
 }
 
-exports.formAttributes = function(name, object, helpText, list){
-  return {
-    name: name,
-    label: name.titleize(),
-    value: object[name],
-    list: exports.mustachizeSelect(name, list, object),
-    helpText: helpText
-  }
+// This needs to move to a form or events file...
+exports.setFormActions = function(model, form){
+  form.on('keyup', function(e){
+    e.preventDefault();
+
+    clearTimeout(Admin.timer);
+    Admin.timer = setTimeout(function(){ 
+      updateAttribute(e.target.name, e.target.value);
+    }, 100);
+  });
+   
+  // form.on('submit', function(e){
+  //   e.preventDefault();
+  //   exports.updateAttribute(e.target.name, e.target.value);
+  // });
+  
+  form.find('select.live').on('change', function(e){
+    e.preventDefault();
+    updateAttribute(e.target.name, e.target.value);
+  });
+  
+  form.find('.radio button.btn').on('click', function(e){
+    e.preventDefault();
+
+    if((e.currentTarget.tagName === 'BUTTON') && !e.currentTarget.className.has('active')){
+      var value = $(e.currentTarget).data('value'),
+          name = $(e.currentTarget).attr('rel');
+          
+      updateAttribute(name, value);
+    }
+  });
+  
+  var updateAttribute = function(name, value){
+    var params = {};
+
+    params[name] = value;
+    model[name] = value; 
+
+    model.update(params);  
+  };
 }
+
+
 

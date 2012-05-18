@@ -4,7 +4,21 @@
   {{/ name }}
   
   {{# shape }}
-    {{> admin-forms-select }}
+    <div class="control-group {{ name }}">
+
+      <label class="control-label" for="{{ model }}-{{ name }}">{{ label }}</label>
+      <div class="controls radio">
+        <div class="btn-group" data-toggle="buttons-radio">
+          {{# list }}
+          <button data-value="{{ value }}" rel="{{ attr }}" title="{{ value }}" value="{{ value }}" class="{{ attr }} btn{{# selected }} active{{/ selected }}">
+            <i class="icon-remove"><span>{{ value }}</span></i>
+          </button>
+          {{/ list }}
+        </div>
+        <div class="help-inline">{{ helpText }}</div>
+      </div>
+
+    </div>
   {{/ shape }}
   
   {{# size }}

@@ -11,6 +11,15 @@ ss.event.on('players', function(players) {
   return 
 });
 
+// Main systems index view
+ss.event.on('login', function(player) {
+  Admin.player = player;
+  return 
+});
+
+
+
+
 // exports.showPlayers = function(){
 //   var players = Admin.players.map(function(player){
 //     return player;

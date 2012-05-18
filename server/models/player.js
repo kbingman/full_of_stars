@@ -14,31 +14,31 @@ var Player = resourceful.define('player', function () {
   
   this.property('name', String);
   this.property('slug', String);
-  this.property('homeworldId', String);
-  this.property('systems', Array);
+  // this.property('homeworldId', String);
+  // this.property('systems', Array);
   this.property('ships', Array);
   this.property('bankAccount', Number);
   // self.property('resources', Object);
   
-  this.property('rareEarthMetals', Number)
-  this.property('minerals', Number)
-  this.property('fuel', Number)
+  // this.property('rareEarthMetals', Number)
+  // this.property('minerals', Number)
+  // this.property('fuel', Number)
   
   // Before Create 
   this.before('create', function(player, callback) {
     player.bankAccount = 1000000000;
     player.ships = [];
     player.slug = player.name.toLowerCase().replace(/ /g, '-');
-    
+    callback();
 
-    System.find({'planets.klass':/terran/i}, function(err, systems){ 
-      var index = Math.ceil(Math.random() * systems.length);
-      var system = systems[index];
-
-      player.homeworld_id = system ? system._id.toString() : null;
-      // system.player_id = player._id;
-      callback();
-    });
+    // System.find({'planets.klass':/terran/i}, function(err, systems){ 
+    //   var index = Math.ceil(Math.random() * systems.length);
+    //   var system = systems[index];
+    // 
+    //   player.homeworld_id = system ? system._id.toString() : null;
+    //   // system.player_id = player._id;
+    //   callback();
+    // });
   });
   
   // self.prototype.homeworld = function(callback){

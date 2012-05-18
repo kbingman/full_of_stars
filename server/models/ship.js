@@ -14,7 +14,7 @@ var Ship = resourceful.define('ship', function () {
   
   this.property('name', String);
   this.property('slug', String);
-  this.property('player_id', String);
+  this.property('playerId', String);
   this.property('number', Number)
   
   this.property('paths', Array);
@@ -39,6 +39,8 @@ var Ship = resourceful.define('ship', function () {
   this.before('create', function(ship, callback) {
     ship.weapons = [];
     ship.price = 0;
+    ship.jump = 0;
+    ship.sublight = 0;
     ship.jump = parseInt(ship.jump);
     ship.sublight = parseInt(ship.sublight);
     callback();

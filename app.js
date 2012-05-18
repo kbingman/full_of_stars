@@ -10,7 +10,7 @@ app.use(flatiron.plugins.http);
 ss.client.define('main', {
   view: 'app.html',
   css:  ['libs/bootstrap', 'index.css'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'app'],
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'app'],
   system: '*',
   tmpl: '*'
 });
@@ -19,18 +19,18 @@ ss.client.define('main', {
 ss.client.define('admin', {
   view: 'admin.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'admin'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'admin', 'system'],
-  system: ['models/weapons.js'],
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'admin', 'system'],
+  system: '*',
   tmpl: '*'
 });
 
 // Serve this client on the root URL
 app.router.get('/', function () {
   this.res.json({ 'hello': 'world' });
-  this.res.serveClient('main');
+  // this.res.serveClient('main');
 });
 
-// Serve this client on the admin URL
+lient on the admin URL
 app.router.get('/admin', function () {
   this.res.json({ 'hello': 'world' });
   // this.res.serveClient('admin');

@@ -41,4 +41,12 @@ ul.weapons li {
   margin: 4px 0 4px;
 }
 
+[class*=" icon-"] {
+  background-image: url("/img/glyphicons-halflings.png");
+}
+.icon-white {
+  background-image: url("/img/glyphicons-halflings-white.png");
+}
+
+
 

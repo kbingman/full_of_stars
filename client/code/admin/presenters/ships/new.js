@@ -1,8 +1,9 @@
-var utilities = require('/utilities');
-var context = require('/presenters/ship').context;
-var defaults = require('ship_defaults').defaults;
+var utilities = require('/utilities'),
+    Ship = require('ship').Ship,
+    defaults = require('ship_defaults').defaults;
 
-exports.present = function(ship){
+exports.present = function(){
+  var ship = new Ship();
   var partials = {
     'admin-ships-ship': ss.tmpl['admin-ships-ship'],
     'admin-ships-form': ss.tmpl['admin-ships-form'],
@@ -10,18 +11,15 @@ exports.present = function(ship){
     'admin-forms-input': ss.tmpl['admin-forms-input'],
     'admin-forms-radio': ss.tmpl['admin-forms-radio']
   }
-  var html = ss.tmpl['admin-ships-edit'].render(exports.context(ship), partials);
+  var html = ss.tmpl['admin-ships-new'].render(exports.context(ship), partials);
   
   $('#content').html(html);
 }
 
 exports.context = function(ship){
-  ship = ship || {};
   return {
     ship: ship,
-    // usc: ship.usc(),
     model: 'ship',
-    price: ship.price ? ship.price.format() : 0,
     name: { 
       name: 'name',
       label: 'Name',
@@ -32,7 +30,7 @@ exports.context = function(ship){
       name: 'type',
       label: 'Type',
       list: utilities.mustachizeSelect('type', defaults.type, ship),
-      helpText: ship.helpText('type')
+      helpText: ship.helpText('name')
     },
     size: {
       name: 'size',
@@ -59,10 +57,7 @@ exports.context = function(ship){
       value: ship.sublight,
       list: utilities.mustachizeSelect('sublight', defaults.sublight, ship),
       helpText: ship.helpText('sublight')
-    },
-    weapons: ship.weapons ? ship.weapons.map(function(w){ return { name: w, index: ship.weapons.indexOf(w) }}) : [],
-    weaponsList: defaults.weapons,
-    weaponsSentence: ship.weapons.toSentence(),
-    defensesList: []
+    }
   }
 }
+
