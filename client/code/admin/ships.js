@@ -1,9 +1,9 @@
-var utilities = require('/utilities');
-var Ship = require('ship').Ship;
-var shipsIndexPresenter = require('/presenters/ships_index');
-var editShipPresenter = require('/presenters/edit_ship');
-var updateShipPresenter = require('/presenters/update_ship');
-var newPresenter = require('/presenters/new_ship');
+var utilities = require('/utilities'),
+    Ship = require('ship').Ship,
+    shipsIndexPresenter = require('/presenters/ships/index'),
+    editShipPresenter = require('/presenters/ships/edit'),
+    updateShipPresenter = require('/presenters/ships/update'),
+    newPresenter = require('/presenters/ships/new');
 
 
 // Socket Emitters
@@ -16,6 +16,8 @@ ss.event.on('ships', function(ships) {
 });
 
 ss.event.on('ship', function(params) {
+  console.log(params.playerId);
+  
   Admin.ships = Admin.ships.remove(function(s){
     return s._id == params._id;
   });
@@ -36,13 +38,9 @@ ss.event.on('updateShip', function(params) {
 
 // Views
 // ------------------------------------------------ //
-
-
 exports.new = function(){
 
   newPresenter.present();
-  
-  
   // Events
   $('form#new-ship-form').on('submit', function(e){
     e.preventDefault();
@@ -57,6 +55,12 @@ exports.new = function(){
 }
 
 exports.edit = function(){
+  
+  if (!Admin.player) {
+    window.router.dispatch('on', '/login');
+    window.router.setRoute('/login');
+    return;
+  }
 
   editShipPresenter.present(Admin.ship);
   updateShipPresenter.present(Admin.ship);
@@ -84,42 +88,10 @@ exports.edit = function(){
       console.log(success);
       window.router.dispatch('on', '/ships/' + Admin.ship._id);
     });
-  })
-  
+  });
   
   var form = $('form#edit-ship-form');
-  form.on('keyup', function(e){
-    e.preventDefault();
-    clearTimeout(Admin.timer);
-    Admin.timer = setTimeout(function(){ 
-      submitUpdate(Admin.ship._id, form, true); 
-    }, 100);
-  });
-   
-  form.on('submit', function(e){
-    e.preventDefault();
-    submitUpdate(Admin.ship._id, form);
-  });
+  form.find('div.radio button.btn').popover({ placement: 'bottom' });
   
-  form.find('select.live').on('change', function(e){
-    e.preventDefault();
-    submitUpdate(Admin.ship._id, form);
-  });
-  
-  form.find('.radio').on('click', function(e){
-    if(e.target.tagName === 'BUTTON'){
-      $(this).find('input').val($(e.target).text());
-      e.preventDefault();
-      submitUpdate(Admin.ship._id, form);
-    }
-  });
+  utilities.setFormActions(Admin.ship, form);
 }
-
-var submitUpdate = function(id, form, flag){
-  form.serializeArray().forEach(function(attr){
-    Admin.ship[attr.name] = attr.value;
-  });
-  Admin.ship.update(function(err, ship){
-    //updateShipPresenter.present(ship);
-  });
-};

@@ -9,12 +9,20 @@ ss.server.on('reconnect', function(){
   console.log('Connection back up :-)');
 });
 
+ss.rpc('app.getCurrentPlayer', function(success){
+  console.log(success)
+});
+
+
+var login = require('/presenters/login/index');
+
 Admin = {
   systems: [],
   players: [],
   ships: [],
   ship: {}
 };
+
 
 ss.server.on('ready', function(){
   
@@ -24,10 +32,12 @@ ss.server.on('ready', function(){
     require('sugar');
     require('array');
     require('/router');
-    require('/utilities');
-    require('/ships');
-    require('/sectors');
-    require('/players');
+
+    
+    if(!Admin.player) {
+      login.present();
+    }
+  
 
   });
 

@@ -7,7 +7,7 @@ var http = require('http'),
 ss.client.define('main', {
   view: 'app.html',
   css:  ['libs/bootstrap', 'index.css'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'app'],
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'app'],
   system: '*',
   tmpl: '*'
 });
@@ -16,11 +16,10 @@ ss.client.define('main', {
 ss.client.define('admin', {
   view: 'admin.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'admin'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'libs/sugar.min.js', 'admin', 'system'],
-  system: ['models/weapons.js'],
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'admin', 'system'],
+  system: '*',
   tmpl: '*'
 });
-
 
 // Serve this client on the admin URL
 ss.http.route('/', function(req, res){

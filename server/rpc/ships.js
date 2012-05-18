@@ -1,4 +1,5 @@
-var Ship = require('../models/ship').Ship;
+var Ship = require('../models/ship').Ship,
+    app = require('./app');
 
 exports.actions = function(req, res, ss) {
 
@@ -8,22 +9,35 @@ exports.actions = function(req, res, ss) {
   return {
 
     all: function() {
-      Ship.all(function(error, ships){
-        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
+      app.getCurrentPlayer(req, res, function(error, player){
+        app.handleErrors
+        
+        Ship.all(function(error, ships){
+          app.handleErrors
 
-        ss.publish.all('ships', ships);
-        return res(true);
+          ss.publish.all('ships', ships);
+          return res(true);
+        });
+        
       });
     }, 
     
     create: function(params){
-      ss.log('➙'.cyan, 'params'.cyan, params);
-      Ship.create(params, function(error, ship){
-        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
+      app.getCurrentPlayer(req, res, function(error, player){
+        app.handleErrors
         
-        ss.publish.all('ship', ship);
-        return res(true);
-      });    
+        params['playerId'] = player._id.toString();
+        ss.log('➙'.cyan, 'params'.cyan, params);
+        Ship.create(params, function(error, ship){
+          app.handleErrors;
+          
+          ss.log('➙'.cyan, 'ship'.cyan, ship);
+        
+          ss.publish.all('ship', ship);
+          return res(true);
+        });  
+        
+      });
     },
     
     show: function(id){
@@ -36,21 +50,39 @@ exports.actions = function(req, res, ss) {
     },
     
     update: function(id, params){
-      // ss.log('➙'.cyan, 'params'.cyan, params);
-      Ship.update(id, params, function(error, ship){
-        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
+      app.getCurrentPlayer(req, res, function(error, player){
+        app.handleErrors;
         
-        ss.publish.all('updateShip', ship);
-        return res(true);
-      });    
+        Ship.get(id, function(error, ship){
+          app.handleErrors; 
+          console.log(ship)
+    
+          if(ship && ship.playerId === player._id.toString()){
+            ship.update(params, function(error, ship){
+              app.handleErrors; 
+            
+              ss.publish.all('updateShip', ship);
+              return res(true);
+            }); 
+          } else {
+            return res(false);
+          }
+
+        });
+        
+      });   
     },
     
     destroy: function(params){
-      Ship.destroy(function(error){
-        if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
-
-        return res(true);
-      });    
+      app.getCurrentPlayer(req, res, function(error, player){
+        app.handleErrors
+      
+        Ship.destroy(function(error){
+          if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
+        
+          return res(true);
+        }); 
+      });   
     },
          
 
