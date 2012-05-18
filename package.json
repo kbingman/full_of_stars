@@ -12,6 +12,8 @@
     "socketstream": "git://github.com/socketstream/socketstream.git",
     "async": "*",
     "sugar": "*",
+    "flatiron": "*",
+    "union": "*",
     "director": "*",
     "mongodb": "1.0.1",
     "resourceful": "*",
