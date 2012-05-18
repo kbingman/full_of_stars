@@ -30,7 +30,6 @@ app.router.get('/', function () {
   // this.res.serveClient('main');
 });
 
-lient on the admin URL
 app.router.get('/admin', function () {
   this.res.json({ 'hello': 'world' });
   // this.res.serveClient('admin');
