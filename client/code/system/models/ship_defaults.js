@@ -9,6 +9,7 @@ var defaults = {
     { name: 'Cruiser', price: 1 },
     { name: 'Destroyer', price: 1 },
     { name: 'Battleship', price: 2 },
+    { name: 'Carrier', price: 4 },   
     { name: 'Battle Station', price: 5 }
   ],
   weapons: [
