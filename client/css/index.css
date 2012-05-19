@@ -8,14 +8,15 @@
 }
 
 #sector {
-  background: #000; 
+  background-color: #000; 
+  background-image: url('/img/grid.png');
 }
 
 #map .system { 
   position: absolute; 
   height: 48px; 
   width: 48px; 
-  background-image: url(/img/system.png); 
+  background-image: url('/img/system.png'); 
   background-position: center center;
   background-repeat: no-repeat; 
   z-index: 1;

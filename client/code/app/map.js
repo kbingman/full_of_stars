@@ -7,7 +7,7 @@ ss.event.on('systems', function(systems) {
   Sector.homeworld = Sector.systems.find(function(s){
     return s._id = Sector.player.homeworldId;
   });
-  
+
   map.present(Sector.systems);
   
   return;
