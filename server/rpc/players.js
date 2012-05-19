@@ -1,4 +1,5 @@
-var Player = require('../models/player').Player;
+var Player = require('../models/player').Player,
+    app = require('./app');
 
 exports.actions = function(req, res, ss) {
 
@@ -29,7 +30,23 @@ exports.actions = function(req, res, ss) {
         ss.publish.all('player', player);
         return res(true);
       });    
-    } 
+    },
+    
+    update: function(id, params){
+      app.getCurrentPlayer(req, res, function(error, currentPlayer){
+        app.handleErrors(req, res, ss, error); 
+        
+        Player.update(id, params, function(error, player){
+          app.handleErrors(req, res, ss, error);
+          ss.log('➙'.cyan, 'params'.cyan, params); 
+          
+          ss.publish.all('updatePlayer', player);
+          return res(true);
+        });
+        
+      });   
+    },
+    
 
   };
 

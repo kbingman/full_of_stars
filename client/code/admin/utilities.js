@@ -1,4 +1,3 @@
-require('sugar');
 require('inflections');
 
 exports.jsonifyParams = function(array){

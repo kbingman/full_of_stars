@@ -31,7 +31,7 @@ var routes = {
   '/players': {
     on: function(){ ss.rpc('players.all'); },
     '/:id': {
-      on: players.showPlayer
+      on: players.show
     }
   }
   

@@ -1,6 +1,6 @@
 var Sector = require('../models/sector').Sector,
-    System = require('../models/sector').Sector,
-    async = require('async');
+    System = require('../models/system').System,
+    app = require('./app');;
 
 // Define actions which can be called from the client using ss.rpc('systems.ACTIONNAME', param1, param2...)
 exports.actions = function(req, res, ss) {
@@ -13,21 +13,21 @@ exports.actions = function(req, res, ss) {
 
   return {
 
-    getSectors: function() {
+    all: function() {
       Sector.all(function(error, sectors){
-        if(error){ return res(false); }
+        app.handleErrors(req, res, ss, error); 
         
         ss.publish.all('sectors', sectors);
         return res(true);
       });
     }, 
     
-    createSector: function(params){
+    create: function(params){
       Sector.create(params, function(error, sector){
-        if(error){ return res(false); }
+        app.handleErrors(req, res, ss, error); 
         
         sector.createSystems(function(error, systems){
-          if(error){ return res(false); }
+          app.handleErrors(req, res, ss, error); 
           
           ss.publish.all('sector', sector);
           return res(true);
@@ -35,12 +35,12 @@ exports.actions = function(req, res, ss) {
       });    
     },
     
-    showSector: function(id){
+    show: function(id){
       Sector.get(id, function(error, sector){
-        if(error){ return res(false); }
-        console.log(id)
+        app.handleErrors(req, res, ss, error); 
+  
         System.find({ 'sectorId': id }, function(error, systems){
-          if(error){ return res(false); }
+          app.handleErrors(req, res, ss, error); 
           
           ss.publish.all('showSector', { sector: sector, systems: systems });
           return res(true);

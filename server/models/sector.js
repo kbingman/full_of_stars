@@ -58,8 +58,10 @@ Sector.prototype.createSystems = function(callback){
     }
       
     System.create(systemAttr, function(error, system){ 
+      console.log(system)
       if(error){ 
-        callback(error);
+        console.log(error)
+        // callback(error);
         return;
       };
       // sector.systemIds.push(system.id);

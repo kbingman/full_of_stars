@@ -12,6 +12,38 @@ exports.present = function(ship){
   var html = ss.tmpl['admin-ships-edit'].render(exports.context(ship), partials);
   
   $('#content').html(html);
+  
+  // Events
+
+  $('fieldset.list button').on('click', function(e){
+    e.preventDefault();
+    var fieldset = $(this).parents('fieldset');
+    var value = fieldset.find('select').val();
+    
+    Admin.ship.weapons.push(value);
+    
+    ss.rpc('ships.update', Admin.ship._id, { weapons: Admin.ship.weapons }, function(success){
+      console.log(success);
+      window.router.dispatch('on', '/ships/' + Admin.ship._id);
+    });
+  });
+  
+  $('fieldset.list a.remove').on('click', function(){
+    var value = $(this).prev('span').text();
+    Admin.ship.weapons = Admin.ship.weapons .remove(function(w){
+      return w == value;
+    });
+    ss.rpc('ships.update', Admin.ship._id, { weapons: Admin.ship.weapons }, function(success){
+      console.log(success);
+      window.router.dispatch('on', '/ships/' + Admin.ship._id);
+    });
+  });
+  
+  var form = $('form#edit-ship-form');
+  form.find('div.radio button.btn').popover({ placement: 'bottom' });
+  
+  utilities.setFormActions(Admin.ship, form);
+  
 }
 
 exports.context = function(ship){

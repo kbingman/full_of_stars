@@ -13,9 +13,10 @@ var Player = resourceful.define('player', function () {
   });
   
   this.property('name', String);
+  this.property('email', String);
   this.property('slug', String);
-  // this.property('homeworldId', String);
-  // this.property('systems', Array);
+  this.property('homeworldId', String);
+  this.property('systems', Array);
   this.property('ships', Array);
   this.property('bankAccount', Number);
   // self.property('resources', Object);

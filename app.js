@@ -7,8 +7,7 @@ var http = require('http'),
 ss.client.define('main', {
   view: 'app.html',
   css:  ['libs/bootstrap', 'index.css'],
-  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'app'],
-  system: '*',
+  code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'app', 'system'],
   tmpl: '*'
 });
 
@@ -17,7 +16,6 @@ ss.client.define('admin', {
   view: 'admin.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'admin'],
   code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'admin', 'system'],
-  system: '*',
   tmpl: '*'
 });
 

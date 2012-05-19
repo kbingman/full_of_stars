@@ -14,6 +14,19 @@ exports.present = function(){
   var html = ss.tmpl['admin-ships-new'].render(exports.context(ship), partials);
   
   $('#content').html(html);
+  
+  // Events
+  $('form#new-ship-form').on('submit', function(e){
+    e.preventDefault();
+  
+    var params = utilities.jsonifyParams($(this).serializeArray());
+
+    ss.rpc('ships.create', params, function(success){
+      console.log(success);
+      window.router.setRoute('/ships/' + Admin.ship._id);
+    });
+  });
+  return;
 }
 
 exports.context = function(ship){

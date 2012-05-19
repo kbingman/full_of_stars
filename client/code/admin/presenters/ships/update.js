@@ -1,14 +1,20 @@
 exports.present = function(ship){
-  var html = ss.tmpl['admin-ships-ship'].render({
+  var html = ss.tmpl['admin-ships-ship'].render(exports.context(ship));
+
+  $('#ship-usc').html(html);
+  // draw(ship.price)
+}
+
+exports.context = function(ship){
+  return {
     ship: ship, 
     weaponsSentence: ship.weapons.toSentence(),
     price: ship.price ? ship.price.format() : 0
-  });
-
-  $('#ship-usc').html(html);
-  draw(ship.price)
+  }
 }
 
+// Private
+// ------------------------------------------------------------
 
 var draw = function(price) {  
   var height = price / 1000 * 42;

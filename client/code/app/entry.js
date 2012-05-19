@@ -9,6 +9,7 @@ ss.server.on('reconnect', function(){
   console.log('Connection back up :-)');
 });
 
+
 Sector = {};
 
 ss.server.on('ready', function(){
@@ -16,7 +17,9 @@ ss.server.on('ready', function(){
   // Wait for the DOM to finish loading
   jQuery(function(){
     
+    require('sugar');
     require('/map');
+    require('/player');
     ss.rpc('systems.all');
 
   });
