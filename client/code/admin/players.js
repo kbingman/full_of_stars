@@ -12,6 +12,7 @@ ss.event.on('players', function(players) {
 // Main systems index view
 ss.event.on('login', function(player) {
   Admin.player = player;
+  
   return 
 });
 
@@ -21,7 +22,7 @@ ss.event.on('updatePlayer', function(player){
   });
   Admin.players.push(player);
   indexPresenter.present(Admin.players);
-  console.log(player);
+
   return
 })
 

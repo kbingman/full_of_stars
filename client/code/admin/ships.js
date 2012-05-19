@@ -12,12 +12,12 @@ ss.event.on('ships', function(ships) {
   Admin.ships = ships.map(function(params){
     return new Ship(params)
   });
+  console.log('ships')
   return shipsIndexPresenter.present(Admin.ships);
 });
 
 ss.event.on('ship', function(params) {
-  console.log(params.playerId);
-  
+
   Admin.ships = Admin.ships.remove(function(s){
     return s._id == params._id;
   });
@@ -44,11 +44,11 @@ exports.new = function(){
 
 exports.edit = function(){
   
-  if (!Admin.player) {
-    window.router.dispatch('on', '/login');
-    window.router.setRoute('/login');
-    return;
-  }
+  // if (!Admin.player) {
+  //   window.router.dispatch('on', '/login');
+  //   window.router.setRoute('/login');
+  //   return;
+  // }
 
   editShipPresenter.present(Admin.ship);
   updateShipPresenter.present(Admin.ship);

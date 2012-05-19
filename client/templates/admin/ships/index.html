@@ -1,4 +1,4 @@
-<h1>ships</h1>
+<h1>Ship Plans</h1>
 <h4><a href="#/ships/new">new ship</a></h4>
 
 <section id="ships">
@@ -7,10 +7,11 @@
       <tr>
         <th class='name'>Name</th>
         <th class='type'>Type</th>
-        <th class='type'>Sublight</th>
-        <th class='type'>Jump</th>
+        <th class='drive'>Sublight</th>
+        <th class='drive'>Jump</th>
         <th class='weapons'>Weapons</th>
-        <th class='usc'>USC</th>
+        <th class='usc small'>USC</th>
+        <th class='delete'></th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +22,13 @@
         <td class='drive'>{{ sublight }}g</td>
         <td class='drive'>{{ jump }} Parsecs</td>
         <td class='weapons'>{{ weapons }}</td>
-        <td class='usc'>{{ usc }}</td>
+        <td class='usc small'>{{ usc }}</td>
+        <td class='delete'><a data-id="{{ _id }}" class="close delete">&times;</a></td>
+      </tr>
+    {{/ ships }}
+    {{^ ships }}
+      <tr>
+        <td colspan="7"><p class="note">No ships</p></td>
       </tr>
     {{/ ships }}
     </tbody>

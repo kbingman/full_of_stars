@@ -40,3 +40,5 @@ var routes = {
 window.router = Router(routes);
 // window.router.configure({ html5history: true });
 window.router.init();
+
+

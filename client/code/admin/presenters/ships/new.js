@@ -20,6 +20,10 @@ exports.present = function(){
     e.preventDefault();
   
     var params = utilities.jsonifyParams($(this).serializeArray());
+    
+    // Need to add the world of creation here. 
+    // for now the Homeworld will do...
+    params.x = 
 
     ss.rpc('ships.create', params, function(success){
       console.log(success);

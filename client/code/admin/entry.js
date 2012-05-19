@@ -34,9 +34,9 @@ ss.server.on('ready', function(){
     require('/router');
 
     
-    if(!Admin.player) {
-      login.present();
-    }
+    // if(!Admin.player) {
+    //   login.present();
+    // }
   
 
   });

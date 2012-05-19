@@ -9,12 +9,10 @@ exports.actions = function(req, res, ss){
     signup: function(params){
       console.log(params)
       Player.create(params, function(error, player){
-        
         exports.handleErrors;
 
-        
         req.session.setUserId(player._id);
-        ss.publish.all('login', player);
+        ss.publish.user(req.session.userId, 'login', player);
         res(true);
       });
       
@@ -23,12 +21,12 @@ exports.actions = function(req, res, ss){
     authenticate: function(username, password){
       
       Player.find({ name: username, password: password }, function(error, players){
-        exports.handleErrors;
+        exports.handleErrors(req, res, ss, error);
         
         var player = players[0];
         if (player) {
           req.session.setUserId(player._id);
-          ss.publish.all('login', player);
+          ss.publish.user(req.session.userId, 'login', player);
           res(true);
         } else {
           res('Access denied!');
@@ -39,11 +37,12 @@ exports.actions = function(req, res, ss){
     
     getCurrentPlayer: function(){
       exports.getCurrentPlayer(req, res, function(error,player){
-        exports.handleErrors;
+        exports.handleErrors(req, res, ss, error);
         
         if (player) {
           req.session.setUserId(player._id);
-          ss.publish.all('login', player);
+          ss.publish.user(req.session.userId, 'login', player);
+
           res(true);
         } else {
           res('Access denied!');
