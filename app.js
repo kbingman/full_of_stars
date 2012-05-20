@@ -32,14 +32,11 @@ ss.http.route('/login', function(req, res){
   res.serveClient('login');
 });
 
-
-
 // Serve this client on the admin URL
 ss.http.route('/', function(req, res){
   if(req.session.userId){
     res.serveClient('main');
   } else {
-    res.serveClient('login');
     res.writeHead(302, { 'Location': '/login' });
     res.end();
   }
@@ -51,7 +48,6 @@ ss.http.route('/admin', function(req, res){
   if(req.session.userId){
     res.serveClient('admin');
   } else {
-    res.serveClient('login');
     res.writeHead(302, { 'Location': '/login' });
     res.end();
   }
