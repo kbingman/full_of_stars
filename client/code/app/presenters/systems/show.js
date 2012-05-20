@@ -1,11 +1,11 @@
 var utilities = require('/utilities');
 
-exports.present = function (systemId) { 
-  var system = Sector.systems.find(function(s){
-    return s._id == systemId;
-  });
+exports.present = function (system) { 
+  // var system = Sector.systems.find(function(s){
+  //   return s._id == systemId;
+  // });
   if(system){
-    var html = ss.tmpl['admin-systems-show'].render(exports.context(system));
+    var html = ss.tmpl['app-systems-show'].render(exports.context(system));
 
     $('#modal').html(html);
     return utilities.openModal();

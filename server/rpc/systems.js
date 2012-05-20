@@ -9,11 +9,18 @@ exports.actions = function(req, res, ss) {
 
   return {
     
-    all: function() {
-      System.all(function(error, systems){
+    all: function(params) {
+      var criteria = { $and: [
+        {'x':{ $gte: params.x1 }}, 
+        {'x':{ $lte: params.x2 }}, 
+        {'y':{ $gte: params.y1 }}, 
+        {'y':{ $lte: params.y2 }}
+      ] };
+   
+      System.find(criteria, function(error, systems){
         app.handleErrors(req, res, ss, error); 
         
-        ss.publish.all('systems', systems);
+        ss.publish.user(req.session.userId,'systems', systems);
         return res(true)
       });
     },
@@ -22,7 +29,7 @@ exports.actions = function(req, res, ss) {
       System.get(id, function(error, system){
         app.handleErrors(req, res, ss, error); 
         
-        ss.publish.all('system', system);
+        ss.publish.user(req.session.userId, 'system', system);
         return res(true)
       });
     }

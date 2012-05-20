@@ -15,7 +15,7 @@ exports.actions = function(req, res, ss) {
         Ship.find({ 'playerId': player._id.toString() }, function(error, ships){
           app.handleErrors(req, res, ss, error); 
 
-          ss.publish.all('ships', ships);
+          ss.publish.user(req.session.userId, 'ships', ships);
           return res(true);
         });
         
@@ -33,7 +33,7 @@ exports.actions = function(req, res, ss) {
           
           ss.log('➙'.cyan, 'ship'.cyan, ship);
         
-          ss.publish.all('ship', ship);
+          ss.publish.user(req.session.userId, 'ship', ship);
           return res(true);
         });  
         
@@ -44,7 +44,7 @@ exports.actions = function(req, res, ss) {
       Ship.get(id, function(error, ship){
         if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
         
-        ss.publish.all('ship', ship);
+        ss.publish.user(req.session.userId, 'ship', ship);
         return res(true);
       });    
     },
@@ -62,7 +62,7 @@ exports.actions = function(req, res, ss) {
             ship.update(params, function(error, ship){
               app.handleErrors(req, res, ss, error); 
             
-              ss.publish.all('updateShip', ship);
+              ss.publish.user(req.session.userId, 'updateShip', ship);
               return res(true);
             }); 
           } else {

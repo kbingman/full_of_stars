@@ -7,7 +7,8 @@ exports.present = function(){
   
   $('#content').html(html);
   
-  $('a#signup').on('click', function(){
+  $('a#signup').on('click', function(e){
+    e.preventDefault();
     signup.present();
   });
   

@@ -2,6 +2,8 @@ var http = require('http'),
     ss = require('socketstream'),
     resourceful = require('resourceful-mongo');
     
+ss.session.options.maxAge = 8640000 * 5;
+    
 // Define the main single-page client
 ss.client.define('main', {
   view: 'app.html',
@@ -18,7 +20,7 @@ ss.client.define('admin', {
   tmpl: '*'
 });
 
-// Define the admin single-page client
+// Define the login single-page client
 ss.client.define('login', {
   view: 'login.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'login'],

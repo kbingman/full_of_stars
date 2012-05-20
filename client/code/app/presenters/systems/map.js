@@ -10,16 +10,14 @@ exports.present = function(systems){
   
   
   Sector.canvas.on('click', function(e){
-    var x = e.offsetX / Sector.scale;
-    var y = e.offsetY / Sector.scale;
+    var x = (e.offsetX - Sector.xFactor) / Sector.scale,
+        y = (e.offsetY - Sector.yFactor) / Sector.scale,
+        fuzziness = 1 * Sector.scale; 
     
-    Sector.systems.forEach(function(s){
-      if((s.x < x + 4 && s.x > x - 4) && (s.y < y + 4 && s.y > y - 4)){
-        console.log(s._id);
-        showSystem.present(s._id);
-        return
-      }
+    var system = Sector.systems.find(function(s){
+      return (s.x < x + fuzziness && s.x > x - fuzziness) && (s.y < y + fuzziness && s.y > y - fuzziness)
     });
+    showSystem.present(system);
   });
   
   Sector.canvas.on('tap', function(){
