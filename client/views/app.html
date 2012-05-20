@@ -9,17 +9,22 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <div class="row">
-            <div class="span8"><a class="brand" href="#">It's Full of Stars!</a></div>
-            <div class="span4"><h2 id="timestamp">Time</h2></div>
-          </div>
+          <nav class="row nav">
+            <a class="brand" href="#/">It's Full of Stars!</a>
+            <a href="#/map">Map</a>
+            <a href="#/ships">Ships</a>
+          </nav>
         </div>
         
       </div>
     </div>
-    <div class="container" id="content">
-
+     <div id="sector">
+      <canvas id="canvas" width="500" height="500"></canvas>
     </div>
+    <div id="overlay">
+      <div id="content" class="container"></div>
+    </div>
+    
     <div id="modal"></div>
   </body>
 

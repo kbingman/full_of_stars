@@ -5,6 +5,7 @@
         <th class='name'>Name</th>
         <th class='sector'>Email</th>
         <th class='homeworld-id'>Homeworld ID</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
         <td class='homeworld-id'>
           <a href="#/systems/{{ homeworldId }}">{{ homeworldId }}</a>
         </td>
+        <td class='delete'><a data-id="{{ _id }}" class="close delete">&times;</a></td>
       </tr>
     {{/ players }}
     </tbody>

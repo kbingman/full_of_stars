@@ -13,9 +13,6 @@ ss.rpc('app.getCurrentPlayer', function(success){
   console.log(success)
 });
 
-
-var login = require('/presenters/login/index');
-
 Admin = {
   systems: [],
   players: [],

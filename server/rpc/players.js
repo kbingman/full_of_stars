@@ -47,6 +47,17 @@ exports.actions = function(req, res, ss) {
       });   
     },
     
+    destroy: function(id){
+      app.getCurrentPlayer(req, res, function(error, currentPlayer){
+        app.handleErrors(req, res, ss, error); 
+      
+        Player.destroy(id, function(error){
+          if(error){ ss.log('➙'.red, 'error'.red, error); return res(false); }
+        
+          return res(true);
+        }); 
+      });   
+    }
 
   };
 

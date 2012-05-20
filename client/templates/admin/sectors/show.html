@@ -6,7 +6,7 @@
     <thead>
       <tr>
         <th class='name'>System Name</th>
-        <th class='sector'>Sector&nbsp;ID</th>
+        <th class='sector'>ID</th>
         <th class='star'>Primary Star</th>
         <th class='clustered'>Clustered</th>
         <th class='planet'>Planets</th>
@@ -16,7 +16,7 @@
     {{# systems }}
       <tr id="system_{{ _id }}">
         <td class='name'><a href="#/systems/{{ _id }}">{{ name }}</a></td>
-        <td class='sector'>{{ sectorId }}</td>
+        <td class='sector'>{{ _id }}</td>
         <td class='star'>{{# stars }}{{ code }}{{ luminosity }}{{/ stars }}</td>
         <th class='clustered'>{{ clustered }}</th>
         <td class='planets'>

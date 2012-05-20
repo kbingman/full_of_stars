@@ -1,0 +1,8 @@
+<canvas id="canvas" width="500" height="500"></canvas>
+<div id="map">
+  
+  {{# systems }}
+    <div id="system_{{ _id }}" class="system {{ slug }}" style="left: {{ x }}px; top: {{ y }}px;"></div>
+    <a class="starlink" data-id="{{ _id }}" data-content="{{ klass }} &ndash; {{ planet_count }} Planets" data-title="{{ _id}}" style="left: {{ x }}px; top: {{ y }}px;"></a>
+  {{/ systems }}
+</div>

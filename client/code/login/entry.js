@@ -9,27 +9,16 @@ ss.server.on('reconnect', function(){
   console.log('Connection back up :-)');
 });
 
-
-Sector = {};
-Sector.scale = 1.5;
-
 ss.server.on('ready', function(){
   
   // Wait for the DOM to finish loading
   jQuery(function(){
     
-    require('sugar');
-    require('array');
-    require('/router');
-    require('/controllers/map');
-    require('/controllers/player');
+    var login = require('/presenters/login'),
+        signup = require('/presenters/signup');
+
+    login.present();
     
-    ss.rpc('systems.all');
-    
-    $('.nav a').on('click', function(e){
-      e.preventDefault();
-      window.router.dispatch('on', $(e.currentTarget).attr('href').replace('#',''));
-    });
     
   });
 
