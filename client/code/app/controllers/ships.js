@@ -51,14 +51,6 @@ exports.index = function(){
 
 
 exports.edit = function(){
-  
-  // if (!Admin.player) {
-  //   window.router.dispatch('on', '/login');
-  //   window.router.setRoute('/login');
-  //   return;
-  // }
-
   editShipPresenter.present(Sector.ship);
   updateShipPresenter.present(Sector.ship);
-
 }

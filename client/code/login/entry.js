@@ -14,9 +14,7 @@ ss.server.on('ready', function(){
   // Wait for the DOM to finish loading
   jQuery(function(){
     
-    var login = require('/presenters/login'),
-        signup = require('/presenters/signup');
-
+    var login = require('/presenters/login');
     login.present();
     
     

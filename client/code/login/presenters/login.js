@@ -18,7 +18,6 @@ exports.present = function(){
         username = $(this).find('input#player-name').val();
         
     ss.rpc('app.authenticate', username, password, function(success){
-      console.log(success)
       if(success){
         window.location.pathname = '/'
       } else {

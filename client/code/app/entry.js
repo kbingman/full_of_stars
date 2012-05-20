@@ -11,7 +11,7 @@ ss.server.on('reconnect', function(){
 
 
 Sector = {};
-Sector.scale = 1.5;
+Sector.scale = 2;
 
 ss.server.on('ready', function(){
   
@@ -23,9 +23,7 @@ ss.server.on('ready', function(){
     require('/router');
     require('/controllers/map');
     require('/controllers/player');
-    
-    ss.rpc('systems.all');
-    
+        
     $('.nav a').on('click', function(e){
       e.preventDefault();
       window.router.dispatch('on', $(e.currentTarget).attr('href').replace('#',''));

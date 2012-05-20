@@ -1,11 +1,7 @@
-var map = require('/presenters/map');
+var map = require('/presenters/systems/map');
 
 ss.event.on('systems', function(systems) {
   Sector.systems = systems;
-  
-  Sector.homeworld = Sector.systems.find(function(s){
-    return s._id == Sector.player.homeworldId;
-  });
 
   map.present(Sector.systems);
   
@@ -13,7 +9,6 @@ ss.event.on('systems', function(systems) {
 });
 
 exports.show = function(){
-  console.log('show map')
   $('#overlay').hide();
   // map.present(Sector.systems);
 }
