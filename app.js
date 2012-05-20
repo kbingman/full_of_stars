@@ -61,18 +61,17 @@ ss.client.templateEngine.use(require('ss-hogan'));
 // Minimize and pack assets if you type: SS_ENV=production node app.js
 if (ss.env == 'production'){
   ss.client.packAssets();
-  // ss.session.store.use('redis', {
-  //   host: 'panga.redistogo.com', 
-  //   port: 9538, 
-  //   pass: '351ce528621de5837d0f6c7828789ad2'
-  // });
-  // ss.publish.transport.use('redis', {
-  //   host: 'panga.redistogo.com', 
-  //   port: 9538, 
-  //   pass: '351ce528621de5837d0f6c7828789ad2'
-  // });
-  // resourceful.db = 'mongodb://fullofstars:123456@staff.mongohq.com:10057/fullOfStars';
-  resourceful.db = 'mongodb://localhost/planetary'; 
+  ss.session.store.use('redis', {
+    host: 'panga.redistogo.com', 
+    port: 9538, 
+    pass: '351ce528621de5837d0f6c7828789ad2'
+  });
+  ss.publish.transport.use('redis', {
+    host: 'panga.redistogo.com', 
+    port: 9538, 
+    pass: '351ce528621de5837d0f6c7828789ad2'
+  });
+  resourceful.db = 'mongodb://fullofstars:123456@staff.mongohq.com:10057/fullOfStars';
 } else if (ss.env == 'development') {
   resourceful.db = 'mongodb://localhost/planetary'; 
 } else {
