@@ -9,6 +9,7 @@ var defaults = {
     { name: 'Cruiser', price: 1 },
     { name: 'Destroyer', price: 1 },
     { name: 'Battleship', price: 2 },
+    { name: 'Carrier', price: 4 },   
     { name: 'Battle Station', price: 5 }
   ],
   weapons: [
@@ -25,8 +26,8 @@ var defaults = {
     { name: "Large",   size: 10000,  price: 10000  },
     { name: "X-Large", size: 100000, price: 100000 },
     { name: "Immense", size: 100000, price: 100000 },
-    { name: "Really really huge", size: 1000000,   price: 1000000 },
-    { name: "That's no Moon",     size: 100000000, price: 100000000 }
+    { name: "Really Really Huge", size: 1000000,   price: 1000000 },
+    { name: "That's No Moon",     size: 100000000, price: 100000000 }
   ],
   shape: [
     { name: "Sphere",     price: 1 },
@@ -34,8 +35,8 @@ var defaults = {
     { name: "Cone",       price: 1 },
     { name: "Needle",     price: 1 },
     { name: "Wedge",      price: 1 },
-    { name: "Cube / Box", price: 0.5 },
-    { name: "Despersed",  price: 0.5 },
+    { name: "Cube", price: 0.5 },
+    { name: "Dispersed",  price: 0.5 },
     { name: "Ring",       price: 1 }
   ],
   sublight: [
