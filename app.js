@@ -28,10 +28,14 @@ ss.client.define('login', {
   tmpl: '*'
 });
 
-
-// Serve this client on the admin URL
+// This is the only url that is not protected
 ss.http.route('/login', function(req, res){
-  res.serveClient('login');
+  if(req.session.userId){
+    res.writeHead(302, { 'Location': '/' });
+    res.end();
+  } else {
+    res.serveClient('login');
+  }
 });
 
 // Serve this client on the admin URL
@@ -43,7 +47,6 @@ ss.http.route('/', function(req, res){
     res.end();
   }
 });
-
 
 // Serve this client on the admin URL
 ss.http.route('/admin', function(req, res){
