@@ -11,7 +11,7 @@ ss.server.on('reconnect', function(){
 
 
 Sector = {};
-Sector.scale = 3;
+Sector.scale = 4;
 
 ss.server.on('ready', function(){
   
@@ -28,6 +28,12 @@ ss.server.on('ready', function(){
       e.preventDefault();
       window.router.dispatch('on', $(e.currentTarget).attr('href').replace('#',''));
     });
+    
+    $('#overlay').on('click', function(e){
+      if(e.target.id == 'overlay'){
+        $(this).hide();
+      }
+    })
     
   });
 

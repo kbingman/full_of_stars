@@ -30,12 +30,6 @@ ss.server.on('ready', function(){
     require('array');
     require('/router');
 
-    
-    // if(!Admin.player) {
-    //   login.present();
-    // }
-  
-
   });
 
 });

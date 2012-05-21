@@ -1,15 +1,7 @@
 var utilities = require('/utilities');
 
-exports.present = function (system) { 
-  var html = ss.tmpl['app-systems-show'].render(exports.context(system));
-
-  $('#content').html(html);
-  $('#overlay').show();
-};
-
-
-exports.context = function(system){
-  return {
+exports.present = function(system){
+  var html = ss.tmpl['admin-systems-show'].render({
     system: system,
     width: function(){
       width = 0;
@@ -24,5 +16,11 @@ exports.context = function(system){
       p['position'] = p.position + 1; 
       return p;
     })
-  }
+  });
+
+  $('#modal').html(html);
+  return utilities.openModal();
 }
+
+
+

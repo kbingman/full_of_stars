@@ -9,7 +9,7 @@
 
 #sector {
   background-color: #000; 
-  background-image: url('/img/grid.png');
+  /* background-image: url('/img/grid.png'); */
 }
 
 #map .system { 
@@ -33,7 +33,7 @@
   z-index: 10;
 } 
   
-#map .departure {   border: 2px solid blue; } 
+#map .departure { border: 2px solid blue; } 
 
 #map .red { background-image: url(/img/red.png);  } 
 #map .orange { background-image: url(/img/orange.png); } 

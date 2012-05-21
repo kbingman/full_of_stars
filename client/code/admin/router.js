@@ -1,11 +1,12 @@
 require('director');
 
-var players = require('/players'),
-    sectors = require('/sectors'),
-    systems = require('/systems'),
-    planets = require('/planets');
+var players = require('/controllers/players'),
+    sectors = require('/controllers/sectors'),
+    systems = require('/controllers/systems')
+    planets = require('/controllers/planets');
 
 var routes = {
+  // '/': function(){ alert('root!')},
   '/sectors': {
     on: function(){ ss.rpc('sectors.all'); },
     '/:id': function(id){ ss.rpc('sectors.show', id); },
@@ -18,11 +19,6 @@ var routes = {
       }
     }
   },
-  // '/ships': {
-  //   on: function(){ ss.rpc('ships.all'); },
-  //   '/new': ships.new,
-  //   '/:id': function(id){ ss.rpc('ships.show', id); }
-  // },
   '/players': {
     on: function(){ ss.rpc('players.all'); },
     '/:id': {

@@ -24,31 +24,16 @@ exports.present = function(systems){
     alert(e.offsetX / Sector.scale + ':' + e.offsetY / Sector.scale)
   });
   
-  // canvas.on('mousemove', function(e){
-  //   var x = e.offsetX / Sector.scale;
-  //   var y = e.offsetY / Sector.scale;
-  //   
-  //   clearTimeout(Sector.hover);
-  //   Sector.hover = setTimeout(function(){
-  //     Sector.systems.forEach(function(s){
-  //       if((s.x < x + 4 && s.x > x - 4) && (s.y < y + 4 && s.y > y - 4)){
-  //         canvas.css({ 'cursor': 'pointer' });
-  //         return
-  //       } else {
-  //         canvas.css({ 'cursor': 'default' });
-  //       }
-  //     });
-  //   }, 200);
-  // });
-  
   if (Sector.canvas[0].getContext) {  
     var ctx = Sector.canvas[0].getContext("2d");  
     // drawSystem(ctx, Sector.homeworld);
     
+    drawGrid(ctx, Sector.width, Sector.height)
+    
     systems.forEach(function(system){
       drawSystem(ctx, system);
       // console.log(system.stars[0].klass)
-    })
+    });
     
     markSystem(ctx, Sector.homeworld);
   }
@@ -65,10 +50,35 @@ var markSystem = function(ctx, system){
   ctx.beginPath();
   ctx.arc(x, y, 20, 0, Math.PI*2, true); 
   ctx.closePath();
+  ctx.lineWidth = 1;
   ctx.strokeStyle = "hsla(30, 100%, 50%, 0.72)";
   ctx.stroke();
   ctx.fillStyle = "hsla(30, 100%, 50%, 0.12)"; 
   ctx.fill();
+}
+
+var drawGrid = function(ctx, width, height){
+  var gridSize = 64 * Sector.scale,
+      verticalLines = Math.floor(width / gridSize),
+      horizontalLines = Math.floor(height / gridSize);
+      
+      console.log(Sector.xFactor % gridSize / 2)
+  
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#222'; //"hsla(0, 0%, 100%, 0.12)";
+  
+  (verticalLines).times(function(i){
+    i = i + 1;
+    ctx.moveTo((i * gridSize) + 0.5, 0);  
+    ctx.lineTo((i * gridSize) + 0.5, height);
+    ctx.stroke();
+  });
+  (horizontalLines).times(function(i){
+    i = i + 1;
+    ctx.moveTo(0, (i * gridSize) + 0.5);  
+    ctx.lineTo(width, (i * gridSize) + 0.5);
+    ctx.stroke();
+  });
 }
 
 var drawSystem = function(ctx, system){
@@ -76,14 +86,6 @@ var drawSystem = function(ctx, system){
   var radius = Math.round(system.stars[0].radius * 1.5 * Sector.scale),
       x = Math.round(system.x * Sector.scale) + Sector.xFactor,
       y = Math.round(system.y * Sector.scale) + Sector.yFactor;      
-  
-  // var radgrad = ctx.createRadialGradient(60,60,0,60,60,60);
-  // radgrad.addColorStop(0, 'rgba(255,255,255,1)');
-  // radgrad.addColorStop(0.8, 'rgba(255,255,255,.9)');
-  // radgrad.addColorStop(1, 'rgba(255,255,255,0)');
-  // 
-  // ctx.fillStyle = 'hsla(0, 0%, 100%, 0.99)';
-  // ctx.fillRect((system.x * 2) - (radius * 12), (system.y * 2) -(radius * 12), radius * 24, radius * 24);
   
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI*2, true); 

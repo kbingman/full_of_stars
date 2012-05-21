@@ -46,7 +46,6 @@ exports.new = function(){
 
 exports.index = function(){
   shipsIndexPresenter.present(Sector.ships);
-  $('#overlay').show();
 }
 
 

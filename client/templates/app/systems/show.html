@@ -1,12 +1,12 @@
-<div class="modal" id="system_modal">
+<div class="system">
   {{# system }}
   <div class="modal-header">
     <a class="close" data-dismiss="modal">x</a>
-    <h3>{{ _id }}: {{ klass }}</h3>
+    <h3>{{ _id }} : {{# stars }}{{ klass }}{{/ stars }}</h3>
   </div>
   {{/ system }}
   
-  <div class="modal-body">
+  <div class="body">
     <div class="orbits" style="width: {{ width }}px;">
       {{# planets }}
       <div class="planet_info" style="width: {{ dRadius }}px;">
@@ -17,9 +17,6 @@
       </div>
       {{/ planets }}
     </div>
-  </div>
-  
-  <div class="modal-footer">
   </div>
   
 </div>

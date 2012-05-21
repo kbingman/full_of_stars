@@ -4,6 +4,7 @@ exports.present = function(ships){
   });
 
   $('#content').html(html);
+  $('#overlay').show();
   
   $('a.delete').on('click', function(e){
     e.preventDefault();
