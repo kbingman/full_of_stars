@@ -1,22 +1,15 @@
 <div class="system">
-  {{# system }}
-  <div class="modal-header">
-    <a class="close" data-dismiss="modal">x</a>
-    <h3>{{ _id }} : {{# stars }}{{ klass }}{{/ stars }}</h3>
+
+  <div class="body">
+    <canvas id="system-map" width="640" height="270"></canvas>
   </div>
+  {{# system }}
+  <section>
+    <h3>{{ _id }} : {{# stars }}{{ klass }}{{/ stars }}</h3>
+  </section>
   {{/ system }}
   
-  <div class="body">
-    <div class="orbits" style="width: {{ width }}px;">
-      {{# planets }}
-      <div class="planet_info" style="width: {{ dRadius }}px;">
-        <div class="planetary_disc {{ klass_slug }}" style="width: {{ dRadius }}px; height: {{ dRadius }}px; margin-top: {{ margin }}px;">
-
-        </div>
-        <span>{{ position }}</span>
-      </div>
-      {{/ planets }}
-    </div>
-  </div>
-  
+  {{# ships }}
+    {{ name }}: this is a ship icon!
+  {{/ ships }}
 </div>

@@ -9,7 +9,7 @@ exports.present = function(systems){
   });
   
   
-  Sector.canvas.on('click', function(e){
+  Sector.canvas.on('click tap', function(e){
     var x = (e.offsetX - Sector.xFactor) / Sector.scale,
         y = (e.offsetY - Sector.yFactor) / Sector.scale,
         fuzziness = 1 * Sector.scale; 
@@ -20,9 +20,9 @@ exports.present = function(systems){
     showSystem.present(system);
   });
   
-  Sector.canvas.on('tap', function(){
-    alert(e.offsetX / Sector.scale + ':' + e.offsetY / Sector.scale)
-  });
+  // Sector.canvas.on('tap', function(){
+  //   alert(e.offsetX / Sector.scale + ':' + e.offsetY / Sector.scale)
+  // });
   
   if (Sector.canvas[0].getContext) {  
     var ctx = Sector.canvas[0].getContext("2d");  

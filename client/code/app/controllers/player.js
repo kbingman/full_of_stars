@@ -32,20 +32,20 @@ ss.event.on('system', function(system){
 
 ss.event.on('ships', function(ships){
   Sector.player.ships = ships;
-  setTimeout(function(){
-    ships.forEach(function(s){
-      var canvas = $('canvas#canvas');
-      if (canvas[0].getContext) {  
-        var ctx = canvas[0].getContext("2d");  
-        ctx.beginPath();
-        ctx.arc(s.x * Sector.scale, s.y * Sector.scale, 12, 0, Math.PI*2, true); 
-        ctx.closePath();
-        ctx.strokeStyle = "#fff";
-        ctx.stroke();
-      }
-    });
-    
-  }, 500)
+  // setTimeout(function(){
+  //   ships.forEach(function(s){
+  //     var canvas = $('canvas#canvas');
+  //     if (canvas[0].getContext) {  
+  //       var ctx = canvas[0].getContext("2d");  
+  //       ctx.beginPath();
+  //       ctx.arc(s.x * Sector.scale, s.y * Sector.scale, 12, 0, Math.PI*2, true); 
+  //       ctx.closePath();
+  //       ctx.strokeStyle = "#fff";
+  //       ctx.stroke();
+  //     }
+  //   });
+  //   
+  // }, 500)
 });
 
 exports.showPlayer = function(system){

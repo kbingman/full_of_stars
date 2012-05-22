@@ -55,7 +55,6 @@
 #content { 
   position: relative;
   margin-top: 72px;
-  background: rgba(255,255,255, 0.92);
 }
 
 #overlay { 
@@ -71,3 +70,4 @@
 
 .index { padding: 10px; }
 .ship-icon { position: absolute; background: white; z-index: 99; width: 20px; height:20px; }
+.ships { background: rgba(255,255,255, 0.92); }
