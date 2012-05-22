@@ -31,6 +31,7 @@ ss.server.on('ready', function(){
     
     $('#overlay').on('click', function(e){
       if(e.target.id == 'overlay'){
+        clearTimeout(Sector.systemAnimator);
         $(this).hide();
       }
     })
