@@ -17,11 +17,14 @@ exports.present = function(systems){
     var system = Sector.systems.find(function(s){
       return (s.x < x + fuzziness && s.x > x - fuzziness) && (s.y < y + fuzziness && s.y > y - fuzziness)
     });
-    showSystem.present(system);
+    if(system){
+      showSystem.present(system);
+      return;
+    }
   });
   
-  // Sector.canvas.on('tap', function(){
-  //   alert(e.offsetX / Sector.scale + ':' + e.offsetY / Sector.scale)
+  // Sector.canvas.on('scroll', function(){
+  //   console.log('hey')
   // });
   
   if (Sector.canvas[0].getContext) {  

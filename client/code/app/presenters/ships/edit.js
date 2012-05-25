@@ -3,11 +3,11 @@ var utilities = require('/utilities'),
 
 exports.present = function(ship){
   var partials = {
-    'admin-ships-ship': ss.tmpl['app-ships-ship'],
-    'admin-ships-form': ss.tmpl['app-ships-form'],
-    'admin-forms-select': ss.tmpl['admin-forms-select'],
-    'admin-forms-input': ss.tmpl['admin-forms-input'],
-    'admin-forms-radio': ss.tmpl['admin-forms-radio']
+    'app-ships-ship': ss.tmpl['app-ships-ship'],
+    'app-ships-form': ss.tmpl['app-ships-form'],
+    'app-forms-select': ss.tmpl['app-forms-select'],
+    'app-forms-input': ss.tmpl['app-forms-input'],
+    'app-forms-radio': ss.tmpl['app-forms-radio']
   }
   var html = ss.tmpl['app-ships-edit'].render(exports.context(ship), partials);
   

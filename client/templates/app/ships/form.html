@@ -1,6 +1,6 @@
 <fieldset>
   {{# name }}
-    {{> admin-forms-input }}
+    {{> app-forms-input }}
   {{/ name }}
   
   {{# shape }}
@@ -21,20 +21,25 @@
     </div>
   {{/ shape }}
   
+  {{# shape }}
+    {{> app-forms-select }}
+  {{/ shape }}
+  
+  
   {{# size }}
-    {{> admin-forms-select }}
+    {{> app-forms-select }}
   {{/ size }}
   
   {{# type }}
-    {{> admin-forms-select }}
+    {{> app-forms-select }}
   {{/ type }}
   
   {{# jump }}
-    {{> admin-forms-radio }}
+    {{> app-forms-radio }}
   {{/ jump }}
   
   {{# sublight }}
-    {{> admin-forms-radio }}
+    {{> app-forms-radio }}
   {{/ sublight }}
   
 

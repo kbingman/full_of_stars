@@ -11,7 +11,7 @@ ss.server.on('reconnect', function(){
 
 
 Sector = {};
-Sector.scale = 4;
+Sector.scale = 3;
 
 ss.server.on('ready', function(){
   

@@ -1,0 +1,26 @@
+<fieldset id="{{ name }}-list" class="list">
+  
+  <div class="control-group">
+    <label class="control-label" for="{{ model }}-{{ name }}">{{ label }}</label>
+    <div class="controls">
+      <select class="select short" id="{{ model }}-{{ name }}">
+        {{# list }}
+        <option>{{ name }}</option>
+        {{/ list }}
+      </select>
+      <button type="submit" class="btn">Add</button>
+      <span class="help-inline">{{ helpText }}</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <div class="controls">
+      <ul class="weapons">
+      {{# attr }}
+        <li><span>{{ . }}</span><a class="close remove">&times;</a></li>
+      {{/ attr }}
+      </ul>
+    </div>
+  </div>
+  
+</fieldset>

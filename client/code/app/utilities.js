@@ -62,7 +62,8 @@ exports.setFormActions = function(model, form){
     if((e.currentTarget.tagName === 'BUTTON') && !e.currentTarget.className.has('active')){
       var value = $(e.currentTarget).data('value'),
           name = $(e.currentTarget).attr('rel');
-          
+        
+          alert(value)
       updateAttribute(name, value);
     }
   });

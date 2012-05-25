@@ -9,7 +9,7 @@ ss.client.define('main', {
   view: 'app.html',
   css:  ['libs/bootstrap', 'shared', 'app'],
   code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'app', 'system'],
-  tmpl: '*'
+  tmpl: ['app']
 });
 
 // Define the admin single-page client
@@ -17,7 +17,7 @@ ss.client.define('admin', {
   view: 'admin.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'shared', 'admin'],
   code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'admin', 'system'],
-  tmpl: '*'
+  tmpl: ['admin']
 });
 
 // Define the login single-page client
@@ -25,7 +25,7 @@ ss.client.define('login', {
   view: 'login.html',
   css:  ['libs/bootstrap/bootstrap.css','libs/bootstrap/bootstrap-responsive.css', 'login'],
   code: ['libs/jquery.min.js', 'libs/bootstrap.js', 'login'],
-  tmpl: '*'
+  tmpl: ['login']
 });
 
 // This is the only url that is not protected

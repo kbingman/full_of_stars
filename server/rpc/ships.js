@@ -56,12 +56,13 @@ exports.actions = function(req, res, ss) {
         Ship.get(id, function(error, ship){
           app.handleErrors(req, res, ss, error);
           ss.log('➙'.cyan, 'params'.cyan, params); 
-          ss.log('➙'.blue, 'ship'.cyan, ship);
+          
     
           if(ship && ship.playerId === player._id.toString()){
             ship.update(params, function(error, ship){
               app.handleErrors(req, res, ss, error); 
-            
+              ss.log('➙'.blue, 'ship'.cyan, ship);
+              
               ss.publish.user(req.session.userId, 'updateShip', ship);
               return res(true);
             }); 
