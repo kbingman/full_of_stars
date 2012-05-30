@@ -57,16 +57,18 @@ exports.context = function(system){
 }
 
 var drawSystemTopView = function(ctx, system){
-  var xCenter = 320,
-      yCenter = 135,
+  var height = 210,
+      width = 920,
+      xCenter = width / 2,
+      yCenter = height / 2,
       star = system.stars[0],
-      starRadius = star.radius * 36;
+      starRadius = star.radius * 36,
+      x = starRadius;
       
-  // ctx.globalCompositeOperation = 'destination-over';
-
-  ctx.clearRect(0,0,640,270); 
+  // Background
+  ctx.clearRect(0,0, width, height); 
   ctx.fillStyle = "#d9d9d9"; 
-  ctx.fillRect(0, 0, 640, 270);
+  ctx.fillRect(0, 0, width, height);
   ctx.save();
   ctx.translate(xCenter,yCenter);
         
@@ -75,12 +77,10 @@ var drawSystemTopView = function(ctx, system){
   ctx.fillStyle = star.klass; 
   ctx.arc(0, 0, starRadius, 0, Math.PI*2, true); 
   ctx.fill();  
-  
-  x = starRadius;
 
   system.planets.forEach(function(p){
-    var radius = Math.round(Math.sqrt(p.radius * 24));
-    var time = new Date();
+    var radius = Math.round(Math.sqrt(p.radius * 24)),
+        time = new Date();
     // ctx.save();
 
     x = Math.round(radius + x + 10);
@@ -107,10 +107,11 @@ var drawSystemTopView = function(ctx, system){
 
 var drawSystemSideView = function(ctx, system){
   var x = 0,
-      centerline = 45,
-      width = 640,
-      height = 90,
-      star = system.stars[0];
+      width = 920,
+      height = 140,
+      centerline = height / 2,
+      star = system.stars[0],
+      elargmentFactor = 240;
   
   ctx.fillStyle = "#d9d9d9"; 
   ctx.fillRect(0, 0, width, height);
@@ -123,8 +124,6 @@ var drawSystemSideView = function(ctx, system){
   ctx.stroke();
   
   // Star
-  var elargmentFactor = 240; 
-  
   x = (star.radius * elargmentFactor) - (star.radius * elargmentFactor * 0.8);
   ctx.beginPath();  
   ctx.fillStyle = star.klass; 
@@ -138,10 +137,6 @@ var drawSystemSideView = function(ctx, system){
     x = Math.round(radius + x + 10);
     ctx.fillStyle = "#444"; 
     ctx.beginPath(); 
-    console.log('Planet: ' + p._id)
-    console.log('x: ' + x)
-    console.log('y: ' + centerline)
-    console.log('Radius: ' + radius)
     
     ctx.arc(x, centerline, radius, 0, Math.PI*2, true); 
     ctx.fill();
