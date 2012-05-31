@@ -19,9 +19,13 @@ exports.actions = function(req, res, ss){
     },
     
     authenticate: function(username, password){
+      console.log('authenticate');
       
       Player.find({ name: username, password: password }, function(error, players){
         exports.handleErrors(req, res, ss, error);
+        
+        console.log('players')
+        console.log(players)
         
         var player = players[0];
         if (player) {
