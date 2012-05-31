@@ -6,10 +6,12 @@ var resourceful = require('resourceful'),
     
 var System = resourceful.define('system', function () {
   
+  // this.use('mongo');
+  
   this.use('mongodb', {
-    uri: resourceful.db, 
-    collection: 'systems', 
-    safe: true
+    uri: 'mongodb://localhost/planetary',
+    collection: 'systems'
+    // safe: true
   });
   
   var self = this;

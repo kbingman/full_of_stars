@@ -1,6 +1,6 @@
 var http = require('http'),
     ss = require('socketstream'),
-    resourceful = require('resourceful-mongo');
+    resourceful = require('resourceful');
     
 ss.session.options.maxAge = 8640000 * 5;
     
@@ -83,18 +83,27 @@ if (ss.env == 'production'){
   resourceful.db = 'mongodb://localhost/planetary_test'; 
 }
 
+console.log(resourceful.engines)
+
+
+var server = http.Server(ss.http.middleware);
+server.listen(3000);
+// Start SocketStream
+ss.start(server);
+
+
 // Open the mongodb connection
-resourceful.use('mongodb', {
-  uri: resourceful.db, // required - the connection to be opened
-  onConnect: function (err) { // required - the callback upon opening the database connection
-    // Start SocketStream
-    if(!err){
-      console.log('connected')
-      // Start web server
-      var server = http.Server(ss.http.middleware);
-      server.listen(3000);
-      // Start SocketStream
-      ss.start(server);
-    }
-  }
-});
+// resourceful.use('mongodb', {
+//   uri: resourceful.db, // required - the connection to be opened
+//   onConnect: function (err) { // required - the callback upon opening the database connection
+//     // Start SocketStream
+//     if(!err){
+//       console.log('connected')
+//       // Start web server
+//       var server = http.Server(ss.http.middleware);
+//       server.listen(3000);
+//       // Start SocketStream
+//       ss.start(server);
+//     }
+//   }
+// });

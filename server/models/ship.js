@@ -3,9 +3,7 @@ var resourceful = require('resourceful'),
 
 var defaults = require('../../client/code/system/models/ship_defaults').defaults;
 var Ship = resourceful.define('ship', function () {
-  
-  // this.use('mongo');
-  
+
   this.use('mongodb', {
     uri: resourceful.db, 
     collection: 'ships', 
