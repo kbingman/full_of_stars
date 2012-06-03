@@ -57,7 +57,7 @@ exports.context = function(system){
 }
 
 var drawSystemTopView = function(ctx, system){
-  var height = 210,
+  var height = 420,
       width = 920,
       xCenter = width / 2,
       yCenter = height / 2,
