@@ -1,23 +1,32 @@
-var utilities = require('/utilities');
+var utilities = require('/utilities'),
+    systemPresenter = require('/presenters/systems/show');
 
-exports.present = function (planet) { 
+exports.present = function (planet, system) { 
         
   var html = ss.tmpl['app-planets-show'].render({
-    planet: planet
+    planet: planet,
+    systemId: system._id
   });
   
   $('#content').html(html);
   $('#overlay').show();
   
   var systemMap = $('#planet-map'),
-      ctx = systemMap[0].getContext('2d');
-  
-  drawPlanetView(ctx, planet);
-  
-  $('a.js-router').on('click', function(e){
-    e.preventDefault();
-    window.router.dispatch('on', $(e.currentTarget).attr('href').replace('#',''));
-  });
+      sideView = $('#side-view'),
+      ctx = systemMap[0].getContext('2d')
+      sideviewCtx = sideView[0].getContext('2d');
+
+  if(ctx && sideviewCtx){
+    drawPlanetView(ctx, planet);
+    
+    systemPresenter.drawSystemSideView(sideviewCtx, system);
+    systemPresenter.setClickEvents(sideView, system);
+    
+    $('a.js-router').on('click', function(e){
+      e.preventDefault();
+      window.router.dispatch('on', $(e.currentTarget).attr('href').replace('#',''));
+    });
+  }
   
 };
 

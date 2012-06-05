@@ -14,26 +14,15 @@ exports.present = function (system) {
       sideviewCtx = sideView[0].getContext('2d');
   
   if(ctx && sideviewCtx){
-    drawSystemSideView(sideviewCtx, system);
+    exports.drawSystemSideView(sideviewCtx, system);
+    exports.setClickEvents(sideView, system);
     Sector.systemAnimator = setInterval(function(){
       drawSystemTopView(ctx, system);
     }, 42);
+    
   }
   
-  sideView.bind('click', function(e){
-    var x = e.offsetX,
-        y = e.offsetY,
-        fuzziness = 1 * Sector.scale; 
-
-    var planet = system.planets.find(function(p){
-      return (x >= (p.x - p.dRadius) && x <= (p.x + p.dRadius)) && (y >= (p.y - p.dRadius) && y <= (p.y + p.dRadius));
-    });
-
-    if(planet){
-      showPlanet.present(planet);
-    }
-
-  });
+  
 };
 
 exports.context = function(system){
@@ -54,6 +43,23 @@ exports.context = function(system){
       return p;
     })
   }
+}
+
+exports.setClickEvents = function(sideView, system){
+  sideView.bind('click', function(e){
+    var x = e.offsetX,
+        y = e.offsetY,
+        fuzziness = 1 * Sector.scale; 
+
+    var planet = system.planets.find(function(p){
+      return (x >= (p.x - p.dRadius) && x <= (p.x + p.dRadius)) && (y >= (p.y - p.dRadius) && y <= (p.y + p.dRadius));
+    });
+
+    if(planet){
+      showPlanet.present(planet, system);
+    }
+
+  });
 }
 
 var drawSystemTopView = function(ctx, system){
@@ -105,7 +111,7 @@ var drawSystemTopView = function(ctx, system){
   ctx.restore();
 }
 
-var drawSystemSideView = function(ctx, system){
+exports.drawSystemSideView = function(ctx, system){
   var x = 0,
       width = 920,
       height = 140,
@@ -141,7 +147,6 @@ var drawSystemSideView = function(ctx, system){
     p.x = x;
     p.y = centerline;
     p.dRadius = radius;
-    p.systemId = system._id;
     
     ctx.arc(x, centerline, radius, 0, Math.PI*2, true); 
     ctx.fill();
