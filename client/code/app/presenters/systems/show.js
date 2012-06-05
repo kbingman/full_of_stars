@@ -1,7 +1,8 @@
-var utilities = require('/utilities');
+var utilities = require('/utilities'),
+    showPlanet = require('/presenters/planets/show');
 
 exports.present = function (system) { 
-        
+  
   var html = ss.tmpl['app-systems-show'].render(exports.context(system));
   
   $('#content').html(html);
@@ -12,7 +13,6 @@ exports.present = function (system) {
       ctx = systemMap[0].getContext('2d'),
       sideviewCtx = sideView[0].getContext('2d');
   
-  
   if(ctx && sideviewCtx){
     drawSystemSideView(sideviewCtx, system);
     Sector.systemAnimator = setInterval(function(){
@@ -21,18 +21,18 @@ exports.present = function (system) {
   }
   
   sideView.bind('click', function(e){
-    var x = (e.offsetX - Sector.xFactor) / Sector.scale,
-        y = (e.offsetY - Sector.yFactor) / Sector.scale,
+    var x = e.offsetX,
+        y = e.offsetY,
         fuzziness = 1 * Sector.scale; 
-    
-    // var planet = system.planets.find(function(s){
-    //   return (s.x < x + fuzziness && s.x > x - fuzziness) && (s.y < y + fuzziness && s.y > y - fuzziness)
-    // });
-    // if(system){
-    //   
-    //   return;
-    // }
-    
+
+    var planet = system.planets.find(function(p){
+      return (x >= (p.x - p.dRadius) && x <= (p.x + p.dRadius)) && (y >= (p.y - p.dRadius) && y <= (p.y + p.dRadius));
+    });
+
+    if(planet){
+      showPlanet.present(planet);
+    }
+
   });
 };
 
@@ -137,6 +137,11 @@ var drawSystemSideView = function(ctx, system){
     x = Math.round(radius + x + 10);
     ctx.fillStyle = "#444"; 
     ctx.beginPath(); 
+    
+    p.x = x;
+    p.y = centerline;
+    p.dRadius = radius;
+    p.systemId = system._id;
     
     ctx.arc(x, centerline, radius, 0, Math.PI*2, true); 
     ctx.fill();

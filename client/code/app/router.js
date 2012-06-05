@@ -2,11 +2,13 @@ require('director');
 
 var ships = require('/controllers/ships'),
     map = require('/controllers/map'),
+    system = require('/controllers/systems'),
     tactical = require('/presenters/systems/tactical');
 
 var routes = {
   '/map': map.show,
   '/tactical': tactical.present,
+  '/systems/:id': system.show,
   '/ships': {
     on: ships.index,
     '/new': ships.new,
