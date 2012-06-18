@@ -1,4 +1,5 @@
 var utilities = require('/utilities'),
+    Planet = require('planet').Planet,
     showPlanet = require('/presenters/planets/show');
 
 exports.present = function (system) { 
@@ -17,7 +18,7 @@ exports.present = function (system) {
     exports.drawSystemSideView(sideviewCtx, system);
     exports.setClickEvents(sideView, system);
     Sector.systemAnimator = setInterval(function(){
-      drawSystemTopView(ctx, system);
+      exports.drawSystemTopView(ctx, system);
     }, 42);
     
   }
@@ -62,7 +63,7 @@ exports.setClickEvents = function(sideView, system){
   });
 }
 
-var drawSystemTopView = function(ctx, system){
+exports.drawSystemTopView = function(ctx, system){
   var height = 420,
       width = 920,
       xCenter = width / 2,
@@ -87,25 +88,18 @@ var drawSystemTopView = function(ctx, system){
   system.planets.forEach(function(p){
     var radius = Math.round(Math.sqrt(p.radius * 24)),
         time = new Date();
-    // ctx.save();
-
+    ctx.save();
     x = Math.round(radius + x + 10);
     
     // Orbital Path
-    ctx.beginPath();  
-    ctx.strokeStyle = '#888';
-    ctx.arc(0, 0, x, 0, Math.PI * 2, true); 
-    ctx.stroke();
+    exports.drawPortrait(ctx, x);
     
     // Planet
-    var deg = ((4 * Math.PI) / 60) * time.getSeconds() + ((4 * Math.PI) / 60000) * time.getMilliseconds()
-    ctx.rotate( deg );
-    ctx.fillStyle = "#444"; 
-    ctx.beginPath(); 
-    ctx.arc(0 + x, 0, radius, 0, Math.PI*2, true); 
-    ctx.fill();
-    
-    // ctx.restore();
+    var step = 32;
+    var deg = ((step * Math.PI) / 60) * time.getSeconds() + ((step * Math.PI) / 60000) * time.getMilliseconds()
+    ctx.rotate( deg );    
+    exports.drawPlanet(ctx, p, radius, x, 0, function(){});
+    ctx.restore();
     x = Math.round(radius + x + 10);
   });
   ctx.restore();
@@ -139,18 +133,31 @@ exports.drawSystemSideView = function(ctx, system){
   // Planets
   system.planets.forEach(function(p){
     var radius = Math.round(Math.sqrt(p.radius * 48));
-    
     x = Math.round(radius + x + 10);
-    ctx.fillStyle = "#444"; 
-    ctx.beginPath(); 
-    
     p.x = x;
     p.y = centerline;
-    p.dRadius = radius;
     
-    ctx.arc(x, centerline, radius, 0, Math.PI*2, true); 
-    ctx.fill();
+    exports.drawPlanet(ctx, p, radius, x, centerline);
     x = Math.round(radius + x + 10);
   });
+}
 
+exports.drawPortrait = function(ctx, x){
+  ctx.beginPath();  
+  ctx.strokeStyle = '#888';
+  ctx.arc(0, 0, x, 0, Math.PI * 2, true); 
+  ctx.stroke();
+}
+
+exports.drawPlanet = function(ctx, planet, radius, x, y, callback){
+  ctx.fillStyle = Planet.colors[planet.klass] || '#444'; 
+  ctx.beginPath(); 
+
+  planet.dRadius = radius;
+  ctx.arc(x, y, radius, 0, Math.PI*2, true); 
+  ctx.fill();
+
+  if(callback){
+    callback(ctx);
+  }
 }

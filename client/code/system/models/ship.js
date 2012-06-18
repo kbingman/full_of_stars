@@ -30,31 +30,32 @@ var Ship = resourceful.define('ship', function () {
   this.prototype.usc = function(){
     return 'code';
   };
-});
+  
+  this.prototype.update = function(params){
+    var self = this;
 
-Ship.prototype.update = function(params){
-  var self = this;
-
-  // finally using fucking apply...
-  this.save(function(err, ship){
-    ss.rpc('ships.update', self.id, params, function(success){
-      console.log(success);
+    // finally using fucking apply...
+    this.save(function(err, ship){
+      ss.rpc('ships.update', self.id, params, function(success){
+        console.log(success);
+      });
     });
-  });
-}
-
-Ship.prototype.helpText = function(attr){
-  var text = {
-    'name'    : 'The Class name.',
-    'shape'   : 'Shape',
-    'size'    : 'Size and Base price',
-    'type'    : 'The basic use of you ship, i.e. War, Exploration, Transport, etc.',
-    'jump'    : 'Maximum range in parsecs per jump.',
-    'sublight': 'Maximum accelleration in Gs.',
-    'weapons' : 'More types are available with better science. Invest wisely.',
-    'defenses': 'Does not work yet.'
   }
-  return text[attr]
-}
+
+  this.prototype.helpText = function(attr){
+    var text = {
+      'name'    : 'The Class name.',
+      'shape'   : 'Shape',
+      'size'    : 'Size and Base price',
+      'type'    : 'The basic use of you ship, i.e. War, Exploration, Transport, etc.',
+      'jump'    : 'Maximum range in parsecs per jump.',
+      'sublight': 'Maximum accelleration in Gs.',
+      'weapons' : 'More types are available with better science. Invest wisely.',
+      'defenses': 'Does not work yet.'
+    }
+    return text[attr]
+  }
+  
+});
 
 exports.Ship = Ship;

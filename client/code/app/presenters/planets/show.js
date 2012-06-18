@@ -1,7 +1,10 @@
 var utilities = require('/utilities'),
+    Planet = require('planet').Planet,
     systemPresenter = require('/presenters/systems/show');
 
 exports.present = function (planet, system) { 
+  
+  clearInterval(Sector.systemAnimator)
         
   var html = ss.tmpl['app-planets-show'].render({
     planet: planet,
@@ -52,12 +55,12 @@ var drawPlanetView = function(ctx, planet){
   
   // Planet
   ctx.translate(xCenter,yCenter);
-  ctx.beginPath();  
-  ctx.fillStyle = '#222'; 
+  drawPlanet(ctx, planet, radius);
+}
+
+var drawPlanet = function(ctx, planet, radius){
+  ctx.beginPath(); 
+  ctx.fillStyle = Planet.colors[planet.klass] || '#444'; 
   ctx.arc(0, 0, radius, 0, Math.PI*2, true); 
   ctx.fill(); 
-  
-
-  
-  
 }
