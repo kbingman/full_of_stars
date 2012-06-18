@@ -1,0 +1,8 @@
+code: 'O', name: 'Blue', frequency: 0.0000033% (so we really don't need to worry about these...)
+code: 'B', name: 'Blue / White', frequency: 0.125%
+code: 'A', name: 'White', frequency: 0.165%
+code: 'F', name: 'Yellow / White', frequency: 3.3%
+code: 'G', name: 'Yellow', frequency: 7.7%
+code: 'K', name: 'Orange', frequency:12%
+code: 'M', name: 'Red', frequency: 74%
+code: 'D', name: 'Degenerate', frequency: 4%
