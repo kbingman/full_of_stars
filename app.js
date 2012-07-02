@@ -1,6 +1,7 @@
 var http = require('http'),
     ss = require('socketstream'),
-    resourceful = require('resourceful');
+    resourceful = require('resourceful'),
+    Mongodb = require('./server/lib/mongodb').Mongodb;
     
 ss.session.options.maxAge = 8640000 * 5;
     
@@ -63,6 +64,9 @@ ss.client.formatters.add(require('ss-less'));
 // Use server-side compiled Hogan (Mustache) templates. Others engines available
 ss.client.templateEngine.use(require('ss-hogan'));
 
+//register engine with resourceful
+resourceful.engines.Mongodb = Mongodb;
+
 // Minimize and pack assets if you type: SS_ENV=production node app.js
 if (ss.env == 'production'){
   ss.client.packAssets();
@@ -83,27 +87,8 @@ if (ss.env == 'production'){
   resourceful.db = 'mongodb://localhost/planetary_test'; 
 }
 
-console.log(resourceful.engines)
-
 
 var server = http.Server(ss.http.middleware);
 server.listen(3000);
 // Start SocketStream
 ss.start(server);
-
-
-// Open the mongodb connection
-// resourceful.use('mongodb', {
-//   uri: resourceful.db, // required - the connection to be opened
-//   onConnect: function (err) { // required - the callback upon opening the database connection
-//     // Start SocketStream
-//     if(!err){
-//       console.log('connected')
-//       // Start web server
-//       var server = http.Server(ss.http.middleware);
-//       server.listen(3000);
-//       // Start SocketStream
-//       ss.start(server);
-//     }
-//   }
-// });
