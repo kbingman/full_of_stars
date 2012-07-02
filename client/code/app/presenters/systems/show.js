@@ -1,7 +1,9 @@
-var utilities = require('/utilities');
+var utilities = require('/utilities'),
+    Planet = require('planet').Planet,
+    showPlanet = require('/presenters/planets/show');
 
 exports.present = function (system) { 
-        
+  
   var html = ss.tmpl['app-systems-show'].render(exports.context(system));
   
   $('#content').html(html);
@@ -12,28 +14,16 @@ exports.present = function (system) {
       ctx = systemMap[0].getContext('2d'),
       sideviewCtx = sideView[0].getContext('2d');
   
-  
   if(ctx && sideviewCtx){
-    drawSystemSideView(sideviewCtx, system);
+    exports.drawSystemSideView(sideviewCtx, system);
+    exports.setClickEvents(sideView, system);
     Sector.systemAnimator = setInterval(function(){
-      drawSystemTopView(ctx, system);
+      exports.drawSystemTopView(ctx, system);
     }, 42);
+    
   }
   
-  sideView.bind('click', function(e){
-    var x = (e.offsetX - Sector.xFactor) / Sector.scale,
-        y = (e.offsetY - Sector.yFactor) / Sector.scale,
-        fuzziness = 1 * Sector.scale; 
-    
-    // var planet = system.planets.find(function(s){
-    //   return (s.x < x + fuzziness && s.x > x - fuzziness) && (s.y < y + fuzziness && s.y > y - fuzziness)
-    // });
-    // if(system){
-    //   
-    //   return;
-    // }
-    
-  });
+  
 };
 
 exports.context = function(system){
@@ -56,8 +46,25 @@ exports.context = function(system){
   }
 }
 
-var drawSystemTopView = function(ctx, system){
-  var height = 210,
+exports.setClickEvents = function(sideView, system){
+  sideView.on('click', function(e){
+    var x = e.offsetX,
+        y = e.offsetY,
+        fuzziness = 1 * Sector.scale; 
+
+    var planet = system.planets.find(function(p){
+      return (x >= (p.x - p.dRadius) && x <= (p.x + p.dRadius)) && (y >= (p.y - p.dRadius) && y <= (p.y + p.dRadius));
+    });
+
+    if(planet){
+      showPlanet.present(planet, system);
+    }
+
+  });
+}
+
+exports.drawSystemTopView = function(ctx, system){
+  var height = 420,
       width = 920,
       xCenter = width / 2,
       yCenter = height / 2,
@@ -82,30 +89,23 @@ var drawSystemTopView = function(ctx, system){
     var radius = Math.round(Math.sqrt(p.radius * 24)),
         time = new Date();
     // ctx.save();
-
     x = Math.round(radius + x + 10);
     
     // Orbital Path
-    ctx.beginPath();  
-    ctx.strokeStyle = '#888';
-    ctx.arc(0, 0, x, 0, Math.PI * 2, true); 
-    ctx.stroke();
+    exports.drawPortrait(ctx, x);
     
     // Planet
-    var deg = ((4 * Math.PI) / 60) * time.getSeconds() + ((4 * Math.PI) / 60000) * time.getMilliseconds()
-    ctx.rotate( deg );
-    ctx.fillStyle = "#444"; 
-    ctx.beginPath(); 
-    ctx.arc(0 + x, 0, radius, 0, Math.PI*2, true); 
-    ctx.fill();
-    
+    var step = 8;
+    var deg = ((step * Math.PI) / 60) * time.getSeconds() + ((step * Math.PI) / 60000) * time.getMilliseconds()
+    ctx.rotate( deg );    
+    exports.drawPlanet(ctx, p, radius, x, 0, function(){});
     // ctx.restore();
     x = Math.round(radius + x + 10);
   });
   ctx.restore();
 }
 
-var drawSystemSideView = function(ctx, system){
+exports.drawSystemSideView = function(ctx, system){
   var x = 0,
       width = 920,
       height = 140,
@@ -133,14 +133,31 @@ var drawSystemSideView = function(ctx, system){
   // Planets
   system.planets.forEach(function(p){
     var radius = Math.round(Math.sqrt(p.radius * 48));
-    
     x = Math.round(radius + x + 10);
-    ctx.fillStyle = "#444"; 
-    ctx.beginPath(); 
+    p.x = x;
+    p.y = centerline;
     
-    ctx.arc(x, centerline, radius, 0, Math.PI*2, true); 
-    ctx.fill();
+    exports.drawPlanet(ctx, p, radius, x, centerline);
     x = Math.round(radius + x + 10);
   });
+}
 
+exports.drawPortrait = function(ctx, x){
+  ctx.beginPath();  
+  ctx.strokeStyle = '#888';
+  ctx.arc(0, 0, x, 0, Math.PI * 2, true); 
+  ctx.stroke();
+}
+
+exports.drawPlanet = function(ctx, planet, radius, x, y, callback){
+  ctx.fillStyle = Planet.colors[planet.klass] || '#444'; 
+  ctx.beginPath(); 
+
+  planet.dRadius = radius;
+  ctx.arc(x, y, radius, 0, Math.PI*2, true); 
+  ctx.fill();
+
+  if(callback){
+    callback(ctx);
+  }
 }
