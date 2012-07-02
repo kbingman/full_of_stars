@@ -47,7 +47,7 @@ exports.context = function(system){
 }
 
 exports.setClickEvents = function(sideView, system){
-  sideView.bind('click', function(e){
+  sideView.on('click', function(e){
     var x = e.offsetX,
         y = e.offsetY,
         fuzziness = 1 * Sector.scale; 
@@ -88,18 +88,18 @@ exports.drawSystemTopView = function(ctx, system){
   system.planets.forEach(function(p){
     var radius = Math.round(Math.sqrt(p.radius * 24)),
         time = new Date();
-    ctx.save();
+    // ctx.save();
     x = Math.round(radius + x + 10);
     
     // Orbital Path
     exports.drawPortrait(ctx, x);
     
     // Planet
-    var step = 32;
+    var step = 8;
     var deg = ((step * Math.PI) / 60) * time.getSeconds() + ((step * Math.PI) / 60000) * time.getMilliseconds()
     ctx.rotate( deg );    
     exports.drawPlanet(ctx, p, radius, x, 0, function(){});
-    ctx.restore();
+    // ctx.restore();
     x = Math.round(radius + x + 10);
   });
   ctx.restore();

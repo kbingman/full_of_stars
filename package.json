@@ -2,7 +2,7 @@
   "name": "stars",
   "subdomain": "universe",
   "description": "An awesome real time application",
-  "version": "0.0.5-8",
+  "version": "0.0.5-14",
   "author": "Keith Bingman <keith@keithbingman.com>",
   "private": true,
   "engines": {

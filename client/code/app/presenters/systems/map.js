@@ -9,10 +9,13 @@ exports.present = function(systems){
   });
   
   
-  Sector.canvas.on('click tap', function(e){
+  Sector.canvas.on('click', function(e){
+    
     var x = (e.offsetX - Sector.xFactor) / Sector.scale,
         y = (e.offsetY - Sector.yFactor) / Sector.scale,
         fuzziness = 1 * Sector.scale; 
+        
+        console.log($(document).offset())
     
     var system = Sector.systems.find(function(s){
       return (s.x < x + fuzziness && s.x > x - fuzziness) && (s.y < y + fuzziness && s.y > y - fuzziness)
