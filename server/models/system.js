@@ -9,9 +9,9 @@ var System = resourceful.define('system', function () {
   // this.use('mongo');
   
   this.use('mongodb', {
-    uri: 'mongodb://localhost/planetary',
-    collection: 'systems'
-    // safe: true
+    uri: resourceful.db, 
+    collection: 'systems',
+    safe: true
   });
   
   var self = this;
