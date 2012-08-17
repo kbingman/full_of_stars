@@ -7,10 +7,11 @@ var Sector = resourceful.define('sector', function () {
   var self = this;
   
   this.use('mongodb', {
-    uri: resourceful.db, 
-    collection: 'sectors', 
-    safe: true
+    uri: 'mongodb://localhost/planetary',
+    collection: 'sectors'
+    // safe: true
   });
+
   
   this.property('name', String);
   this.property('x', Number);

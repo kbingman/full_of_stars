@@ -2,7 +2,7 @@
   "name": "stars",
   "subdomain": "universe",
   "description": "An awesome real time application",
-  "version": "0.0.5-14",
+  "version": "0.0.5-18",
   "author": "Keith Bingman <keith@keithbingman.com>",
   "private": true,
   "engines": {
@@ -13,9 +13,8 @@
     "async": "*",
     "sugar": "*",
     "director": "*",
-    "mongodb": "1.0.1",
+    "mongodb-wrapper": "0.3.0",
     "resourceful": "*",
-    "resourceful-mongo": "git://github.com/kbingman/resourceful-mongo.git",
     "ss-hogan": "0.1.x",
     "ss-less": "*"
   },

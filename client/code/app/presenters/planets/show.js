@@ -8,7 +8,7 @@ exports.present = function (planet, system) {
         
   var html = ss.tmpl['app-planets-show'].render({
     planet: planet,
-    systemId: system._id
+    system: system
   });
   
   $('#content').html(html);

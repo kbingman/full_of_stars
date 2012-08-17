@@ -1,13 +1,20 @@
 <div class="system">
 
-  <div class="body">
+  <section class="body">
     <canvas id="planet-map" width="920" height="410"></canvas>
     <canvas id="side-view" width="920" height="140"></canvas>
-  </div>
-  {{# planet }}
-  <section>
-    <h3>{{ _id }}</h3>
-    <p><a class="js-router" href="#/systems/{{ systemId }}">Back</a></p>
+    {{# planet }}
+    <div class="info">
+      <h3>{{ _id }} INFO</h3>
+    </div>
+    {{/ planet }}
   </section>
-  {{/ planet }}
+  
+  {{# system }}
+  <section>
+    <h3>{{ _id }} : {{# stars }}{{ klass }}{{/ stars }}</h3>
+    <p><a class="js-router" href="#/systems/{{ _id }}">Back</a></p>
+  </section>
+  {{/ system }}
+
 </div>

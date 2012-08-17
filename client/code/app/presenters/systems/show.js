@@ -19,10 +19,8 @@ exports.present = function (system) {
     exports.setClickEvents(sideView, system);
     Sector.systemAnimator = setInterval(function(){
       exports.drawSystemTopView(ctx, system);
-    }, 42);
-    
+    }, 42); 
   }
-  
   
 };
 
@@ -41,6 +39,7 @@ exports.context = function(system){
       p['dRadius'] = Math.round(p['radius'] * 20);
       p['margin'] = -Math.round(p['dRadius'] / 2);
       p['position'] = p.position + 1; 
+      p['period'] = 72 /  p['position'];
       return p;
     })
   }
@@ -66,6 +65,7 @@ exports.setClickEvents = function(sideView, system){
 exports.drawSystemTopView = function(ctx, system){
   var height = 420,
       width = 920,
+      step = 0,
       xCenter = width / 2,
       yCenter = height / 2,
       star = system.stars[0],
@@ -88,18 +88,18 @@ exports.drawSystemTopView = function(ctx, system){
   system.planets.forEach(function(p){
     var radius = Math.round(Math.sqrt(p.radius * 24)),
         time = new Date();
-    // ctx.save();
+    ctx.save();
     x = Math.round(radius + x + 10);
     
     // Orbital Path
     exports.drawPortrait(ctx, x);
     
     // Planet
-    var step = 8;
+    var step = p.period;
     var deg = ((step * Math.PI) / 60) * time.getSeconds() + ((step * Math.PI) / 60000) * time.getMilliseconds()
     ctx.rotate( deg );    
     exports.drawPlanet(ctx, p, radius, x, 0, function(){});
-    // ctx.restore();
+    ctx.restore();
     x = Math.round(radius + x + 10);
   });
   ctx.restore();
@@ -132,6 +132,7 @@ exports.drawSystemSideView = function(ctx, system){
     
   // Planets
   system.planets.forEach(function(p){
+    console.log(p)
     var radius = Math.round(Math.sqrt(p.radius * 48));
     x = Math.round(radius + x + 10);
     p.x = x;
